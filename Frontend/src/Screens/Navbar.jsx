@@ -17,8 +17,9 @@ const Navbar = () => {
           <NavLink to='/cartPage'>
             <AddCart />
           </NavLink>
-
           {/* belows of the text apply here  */}
+
+
         </div>
       </div>
     </div>

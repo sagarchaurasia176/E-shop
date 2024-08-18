@@ -7,17 +7,20 @@ const AddCart = () => {
   return (
     <div>
       {/* ciShopping Carrts */}
-       {
-           Carts && Carts.length > 0(
+      {Carts &&
+        Carts.length >
+          0(
             <sub
-              className=" text-white  font-semibold text-1xl rounded-full 
+              className="  text-cyan-200  font-semibold text-1xl rounded-full 
              p-2 ml-2  animate-bounce "
-            >{Carts.length}</sub>          
-    )}
+            >
+              {Carts.length}
+            </sub>
+          )}
       {/* shooping cart apply here */}
       <CiShoppingCart
         className=" size-8 cursor-pointer
-       text-red-500"
+       text-white"
       />
     </div>
   );
