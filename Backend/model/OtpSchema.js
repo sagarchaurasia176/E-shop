@@ -27,10 +27,8 @@ async function mailVerification(email, otp) {
       "welcome",
       otpTemplate(otp)
     );
-    console.log("maile verify", mailChecked);
     return mailChecked;
   } catch (er) {
-    console.log("error at mail verifiction schema side", er);
     throw new error();
   }
 }
@@ -41,7 +39,6 @@ otpSchemas.pre("save", async function (next) {
     await mailVerification(this.email, this.otp);
     next();
   } catch (er) {
-    console.log("error at otp sending schema side", er);
     throw new error();
   }
 });

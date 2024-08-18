@@ -7,7 +7,7 @@ const otpGenerate = require("otp-generator");
 //otp Controller apply here
 exports.OtpController = async (req, res) => {
   try {
-    //email 
+    //email
     const { email } = req.body;
     //validtion
     if (!email) {
@@ -31,10 +31,10 @@ exports.OtpController = async (req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    console.log("otp generate" , otpGenarates );
+    console.log("otp generate", otpGenarates);
 
     // main catched apply there
-    const otpStored = await OtpSchema.create({ email , otp : otpGenarates});
+    const otpStored = await OtpSchema.create({ email, otp: otpGenarates });
     return res.status(200).json({
       success: true,
       message: "OTP sent successfully!",
@@ -51,7 +51,6 @@ exports.OtpController = async (req, res) => {
 };
 
 // Signup - Controllers
-
 exports.SignupController = async (req, res) => {
   try {
     const { name, email, password, confirmPassword, role, otp } = req.body;
@@ -61,9 +60,8 @@ exports.SignupController = async (req, res) => {
         message: "emapty field !",
       });
     }
-
     //email valid
-    const checkInDb = AuthsSchema.findOne({ email });
+    const checkInDb = await AuthsSchema.findOne({ email });
     if (checkInDb) {
       return res.json({
         success: false,
@@ -72,7 +70,7 @@ exports.SignupController = async (req, res) => {
     }
     //otp valid
     //password hash
-    let hashPasword = bycrypt.hash(password, 10);
+    let hashPasword = await bycrypt.hash(password, 10);
     if (!hashPasword) {
       return res.json({
         success: false,
@@ -95,11 +93,16 @@ exports.SignupController = async (req, res) => {
       .limit(1)
       .exec();
     console.log("recent otp", recentOtpIndetify);
-    //otp valid
-    if (recentOtpIndetify) {
+    //if otp empty
+    if (recentOtpIndetify.length == 0) {
       return res.status(400).json({
         success: false,
-        message: "Your Otp expired | Kindly try again",
+        message: "otp not found",
+      });
+    } else if (otp !== recentOtpIndetify) {
+      return res.status(400).json({
+        success: false,
+        message: "otp not matched !",
       });
     }
 
@@ -110,7 +113,7 @@ exports.SignupController = async (req, res) => {
       password: hashPasword,
       confirmPassword: hashPasword,
       role,
-      otp,
+      otp: recentOtpIndetify,
     });
     return res.status(200).json({
       success: true,
