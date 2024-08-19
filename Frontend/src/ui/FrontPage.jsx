@@ -1,7 +1,6 @@
 import LoginUi from "@/validation/LoginUi";
 import SingupUi from "@/validation/SingupUi";
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 
 const FrontPage = () => {
   // statte to change the button accorndingot the behavious
