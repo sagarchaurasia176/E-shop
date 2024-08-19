@@ -14,21 +14,8 @@ function App() {
       <div>
       <Routes>
         <Route path="/" element={<FrontPage/>}></Route>
-
       </Routes>
-        {/* <div className="h-screen">
-        
-          <div className="">
-            <Navbar />
-          </div>
-          <Routes>
-            <Route path="/" element={<MainProductPage />}></Route>
-            <Route path="/cartPage" element={<CartCatalog />}></Route>
-          </Routes>
-        </div> */}
-
-
-        {/* 👉pending task routes handler  */}
+       
       </div>
     </>
   );
