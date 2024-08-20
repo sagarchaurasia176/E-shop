@@ -1,8 +1,9 @@
 import React from "react";
 import logo from "../img/logo.png";
+import { NavLink } from "react-router-dom";
 
 // Backend stuff
-const LoginUi = ({ loginSignupBtnChange }) => {
+const LoginUi = () => {
   return (
     <div>
       <div className="  w-full  sm:w-[100%]   sm:px-[4rem]  p-6 m-auto mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -82,14 +83,15 @@ const LoginUi = ({ loginSignupBtnChange }) => {
           <p className="mt-8 text-xs  font-light text-center text-gray-400">
             {" "}
             Don't have an account?{" "}
+            
+            <NavLink to='/Singup'>
             <p
-              onClick={() => {
-                loginSignupBtnChange();
-              }}
               className=" cursor-pointer font-medium text-gray-700 dark:text-gray-200 hover:underline"
             >
               Create One
             </p>
+            </NavLink>
+           
           </p>
         </div>
       </div>

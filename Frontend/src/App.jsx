@@ -1,21 +1,24 @@
 import "./App.css";
-// import MainProductPage from "./page/MainProductPage";
-// import LocomotiveScroll from "locomotive-scroll";
-// const locomotiveScroll = new LocomotiveScroll();
+
 import { Route, Routes } from "react-router-dom";
-// import CartCatalog from "./page/CartCatalog";
-// import FormUi from "./validation/FormUi";
-import FrontPage from "./ui/FrontPage";
+
+import FrontPage from "./ui/AuthPage";
+import SingupUi from "./validation/SingupUi";
+import LoginUi from "./validation/LoginUi";
+import Homapage from "./components/Home/Homapage";
 
 // main function apply here
 function App() {
   return (
     <>
       <div>
-      <Routes>
-        <Route path="/" element={<FrontPage/>}></Route>
-      </Routes>
-       
+        <Routes>
+          <Route path="/" element={<Homapage/>}></Route>
+          {/* Singup page */}
+          <Route path="/Singup" element={<SingupUi />}></Route>
+          {/* login page */}
+          <Route path="/Login" element={<LoginUi />}></Route>
+        </Routes>
       </div>
     </>
   );
