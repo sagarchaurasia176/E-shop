@@ -1,6 +1,7 @@
 import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
 
+// this is kind of your useState
 const initialState = {
   cartPost: [],
 };

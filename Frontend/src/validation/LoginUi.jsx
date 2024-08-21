@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 const LoginUi = () => {
   return (
     <div>
-      <div className="  w-full  sm:w-[100%]   sm:px-[4rem]  p-6 m-auto mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <div className="    sm:w-[30%]    sm:px-[3rem]  bg-slate-300 mt-12  p-6 m-auto mx-auto  rounded-lg  dark:bg-gray-100">
         <div className="flex justify-center mx-auto">
           <img className="w-auto h-7 sm:h-8" src={logo} alt="" />
         </div>
@@ -83,15 +83,11 @@ const LoginUi = () => {
           <p className="mt-8 text-xs  font-light text-center text-gray-400">
             {" "}
             Don't have an account?{" "}
-            
-            <NavLink to='/Singup'>
-            <p
-              className=" cursor-pointer font-medium text-gray-700 dark:text-gray-200 hover:underline"
-            >
-              Create One
-            </p>
+            <NavLink to="/Singup">
+              <p className=" cursor-pointer font-medium text-gray-700 dark:text-gray-200 hover:underline">
+                Create One
+              </p>
             </NavLink>
-           
           </p>
         </div>
       </div>

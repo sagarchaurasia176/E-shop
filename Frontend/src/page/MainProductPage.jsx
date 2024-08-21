@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "./Spinner";
 import StatusCode from "@/lib/StatusCode";
-import CategoryNav from "@/Screens/CategoryNav";
 import { ProductApi } from "@/Store/Slice/ProductSlice";
 import { addBtn, removeBtn } from "@/Store/Slice/CatalogSlice";
 import toast from "react-hot-toast";
@@ -10,8 +9,8 @@ import toast from "react-hot-toast";
 
 const MainProductPage = ({ items }) => {
   const dispatch = useDispatch();
-  
-    useEffect(() => {
+
+  useEffect(() => {
     dispatch(ProductApi());
   }, []);
 
@@ -29,7 +28,6 @@ const MainProductPage = ({ items }) => {
     toast.success("Item Removed from cart");
   };
 
-
   // add cart Btn Hander
   const AddCartBtnHandler = () => {
     dispatch(addBtn(items));
@@ -38,7 +36,6 @@ const MainProductPage = ({ items }) => {
 
   return (
     <div>
-      <CategoryNav />
       {/* main product page apply here */}
       <div className=" w-full p-1 m-auto rounded-md md:w-2/3 ">
         <div className=" lg:grid p-2  gap-1  lg:grid-cols-3">
@@ -77,7 +74,7 @@ const MainProductPage = ({ items }) => {
                   {/* buttons */}
                   <div className="flex flex-row gap-7">
                     {Array.isArray(items) &&
-                    Carts.some((p) => p?.id === post.id) ? (
+                      Carts.some((p) => p?.id === post.id) ? (
                       <button onClick={RemoveBtnHandler}>Remove Item</button>
                     ) : (
                       <button
@@ -92,12 +89,6 @@ const MainProductPage = ({ items }) => {
                       Buy Now
                     </button>
                   </div>
-
-
-
-
-
-
                 </div>
               </div>
             </>
