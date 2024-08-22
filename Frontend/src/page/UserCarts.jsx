@@ -10,7 +10,9 @@ const UserCarts = ({ items }) => {
                    transition duration-300 ease-in gap-3 p-4 mt-10 ml-1 
                   rounded-lg  outline"
         >
-          <div>{items.title}</div>
+          <div>
+            <span>{items.title}</span>
+          </div>
           <div className="h-[130px]">
             <img
               className=" h-full w-full  rounded-t-lg"

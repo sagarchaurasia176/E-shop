@@ -2,20 +2,22 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "./Spinner";
 import StatusCode from "@/lib/StatusCode";
-import { ProductApi } from "@/Store/Slice/ProductSlice";
+import { post, ProductApi } from "@/Store/Slice/ProductSlice";
 import { addBtn, removeBtn } from "@/Store/Slice/CatalogSlice";
 import toast from "react-hot-toast";
 // main Product page apply here
-
 const MainProductPage = ({ items }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // API CALLED HERE 
     dispatch(ProductApi());
   }, []);
 
-  const { post: AddCart, Status } = useSelector((state) => state.AddCart);
-  const { Carts } = useSelector((state) => state);
+
+  const { post: ProductsAPi} = useSelector((state) => state);
+
+  const Carts  = useSelector((state) => state.cartPost);
   // check the satus code
   if (Status === StatusCode.LOADING) return <Spinner />;
   // error
@@ -39,7 +41,7 @@ const MainProductPage = ({ items }) => {
       {/* main product page apply here */}
       <div className=" w-full p-1 m-auto rounded-md md:w-2/3 ">
         <div className=" lg:grid p-2  gap-1  lg:grid-cols-3">
-          {AddCart.map((details) => (
+          {ProductsAPi.map((details) => (
             <>
               <div key={details.id} className=" ">
                 <div
@@ -73,8 +75,8 @@ const MainProductPage = ({ items }) => {
 
                   {/* buttons */}
                   <div className="flex flex-row gap-7">
-                    {Array.isArray(items) &&
-                      Carts.some((p) => p?.id === post.id) ? (
+                    {
+                     Carts &&  Carts((p) => p?.id === post.id) ? (
                       <button onClick={RemoveBtnHandler}>Remove Item</button>
                     ) : (
                       <button

@@ -4,7 +4,7 @@ import ProductSlice from '../ProductSlice'
 
 export const MainStore = configureStore({
   reducer: {
-    AddCart: ProductSlice,
+    ProductsAPi: ProductSlice,
     Carts: CatalogSlice,
   },
 })

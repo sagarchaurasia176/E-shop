@@ -5,12 +5,11 @@ import StatusCode from "@/lib/StatusCode";
 
 const initialState = {
   post: [],
-  Status: StatusCode.IDEAL,
 };
 
 // loading parts apply here
 export const ProductSlice = createSlice({
-  name: "AddCart",
+  name: "ProductsAPi",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -37,5 +36,6 @@ export default ProductSlice.reducer;
 export const ProductApi = createAsyncThunk("fetchProduct", async () => {
   const response = await fetch("https://fakestoreapi.com/products");
   const data = await response.json();
+  console.log("data from the redux server", data);
   return data; // This will be the payload of the fulfilled action
 });

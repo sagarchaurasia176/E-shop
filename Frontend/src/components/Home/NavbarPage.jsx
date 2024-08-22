@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Logo from "../../img/logo.png";
 import { FaRegUser } from "react-icons/fa6";
 import { CiShoppingCart } from "react-icons/ci";
+import AddCart from "@/page/AddCartIcons";
 
 // Navbar headers
 const NavbarPage = () => {
@@ -19,7 +20,8 @@ const NavbarPage = () => {
           </div>
           {/* menu bar */}
           <div className="   hidden md:block   w-[816px] h-2 py-3  space-x-10">
-            <Link className="   w-[70px] h-[32px]  space-x-10  font-thin text-white  size-16  justify-center">
+            <Link to='/Products'
+            className="   w-[70px] h-[32px]  space-x-10  font-thin text-white  size-16  justify-center">
               Home
             </Link>
             <Link
@@ -41,8 +43,8 @@ const NavbarPage = () => {
             <FaRegUser className=" size-6" />
           </Link>
           {/* nex div */}
-          <Link to="/product" className=" w-20  p-2  font-thin text-white ">
-            <CiShoppingCart className=" size-6" />
+          <Link to="/Carts" className=" w-20  p-2  font-thin text-white ">
+            <AddCart />
           </Link>
         </div>
       </div>
