@@ -5,20 +5,21 @@ import { NavLink } from "react-router-dom";
 import UserCarts from "./UserCarts";
 
 const CartCatalog = () => {
-  const { cartPost: Carts } = useSelector((state) => state.Carts);
+  const { cartPost } = useSelector((state) => state);
 
   return (
     <>
       <div>
         <div className="">
           <div className="">
+            <h1>saga</h1>
             {/* cart page  */}
             <div className="">
-              {Carts && Carts.length > 0 ? (
+              {cartPost.length > 0 ? (
                 <>
                   <div>
-                    {Carts &&
-                      Carts.map((items) => {
+                    {cartPost &&
+                      cartPost.map((items) => {
                         return <UserCarts key={items.id} items={items} />;
                       })}
                   </div>

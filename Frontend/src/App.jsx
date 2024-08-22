@@ -7,6 +7,7 @@ import LoginUi from "./validation/LoginUi";
 import { Theme } from "@radix-ui/themes";
 import NavbarPage from "./components/Home/NavbarPage";
 import MainProductPage from "./page/MainProductPage";
+import UserCarts from "./page/UserCarts";
 
 // main function apply here
 function App() {
@@ -23,8 +24,12 @@ function App() {
           <Routes>
             {/* Singup page */}
             <Route path="/" element={<LoginUi />}></Route>
+
+            <Route path="/Products" element={<MainProductPage/>}></Route>
             <Route path="/Singup" element={<SingupUi />}></Route>
             <Route path="/product" element={<MainProductPage />}></Route>
+            <Route path="/Carts" element={<UserCarts/>}></Route>
+
             {/* login page */}
           </Routes>
         </div>
