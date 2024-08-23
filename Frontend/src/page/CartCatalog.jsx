@@ -3,24 +3,41 @@ import { NavLink } from "react-router-dom";
 // import StatusCode from "@/lib/StatusCode";
 // import Spinner from "./Spinner";
 import UserCarts from "./UserCarts";
+import { useEffect, useState } from "react";
 
 const CartCatalog = () => {
-  const { cartPost } = useSelector((state) => state);
+  const Cartss = useSelector((state) => state.Carts.emptyCart);
+  console.log("carts values ", Cartss);
+  const [total, setTotal] = useState(0);
+
+  // useEffect apply here so we get this !
+  useEffect(() => {
+    setTotal(
+      Cartss.reduce((previousValue, currentValue) => {
+        previousValue + currentValue.price;
+      }, 0)
+    );
+  }, [Cartss]);
 
   return (
     <>
       <div>
         <div className="">
           <div className="">
-            <h1>saga</h1>
             {/* cart page  */}
             <div className="">
-              {cartPost.length > 0 ? (
+              {Cartss && Cartss.length > 0 ? (
                 <>
                   <div>
-                    {cartPost &&
-                      cartPost.map((items) => {
-                        return <UserCarts key={items.id} items={items} />;
+                    {Cartss &&
+                      Cartss.map((items) => {
+                        return (
+                          <UserCarts
+                            key={items.id}
+                            items={items}
+                            amount={total}
+                          />
+                        );
                       })}
                   </div>
                 </>
@@ -41,7 +58,7 @@ const CartCatalog = () => {
                       </span>
                       Add Something
                     </h1>
-                    <NavLink to="/">
+                    <NavLink to="/Products">
                       <div
                         className=" flex justify-center items-center 
                          w-44 rounded-lg m-auto cursor-pointer 

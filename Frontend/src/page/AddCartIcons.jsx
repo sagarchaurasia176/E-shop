@@ -3,18 +3,18 @@ import { CiShoppingCart } from "react-icons/ci";
 import { useSelector } from "react-redux";
 
 const AddCart = () => {
-  const { Carts } = useSelector((states) => states.Carts);
+  const { emptyCart } = useSelector((states) => states);
   return (
     <div>
-      {/* ciShopping Carrts */}
-      {Carts &&
-        Carts.length >
-          0(
+      {/* ciShoping Carrts */}
+      {emptyCart&&
+        emptyCart.length > 0 
+        (
             <sub
               className="  text-cyan-200  font-semibold text-1xl rounded-full 
              p-2 ml-2  animate-bounce "
             >
-              {Carts.length}
+              {emptyCart.length}
             </sub>
           )}
       {/* shooping cart apply here */}

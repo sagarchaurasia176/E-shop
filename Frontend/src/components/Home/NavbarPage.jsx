@@ -9,7 +9,7 @@ import AddCart from "@/page/AddCartIcons";
 const NavbarPage = () => {
   return (
     <>
-      <div className="  w-full max-w-[1200px">
+      <div className="">
         {/* another div here  */}
         <div className=" flex  bg-slate-800  text-center p-2 justify-around">
           {/* div for main nav */}
@@ -20,8 +20,10 @@ const NavbarPage = () => {
           </div>
           {/* menu bar */}
           <div className="   hidden md:block   w-[816px] h-2 py-3  space-x-10">
-            <Link to='/Products'
-            className="   w-[70px] h-[32px]  space-x-10  font-thin text-white  size-16  justify-center">
+            <Link
+              to="/Products"
+              className="   w-[70px] h-[32px]  space-x-10  font-thin text-white  size-16  justify-center"
+            >
               Home
             </Link>
             <Link
@@ -38,10 +40,10 @@ const NavbarPage = () => {
             </Link>
           </div>
           {/* last div for cart page */}
-
+{/* 
           <Link to="/" className=" w-20  p-2  text-white ">
             <FaRegUser className=" size-6" />
-          </Link>
+          </Link> */}
           {/* nex div */}
           <Link to="/Carts" className=" w-20  p-2  font-thin text-white ">
             <AddCart />
