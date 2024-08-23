@@ -7,7 +7,7 @@ import LoginUi from "./validation/LoginUi";
 import { Theme } from "@radix-ui/themes";
 import NavbarPage from "./components/Home/NavbarPage";
 import MainProductPage from "./page/MainProductPage";
-import UserCarts from "./page/UserCarts";
+import CartCatalog from "./page/CartCatalog";
 
 // main function apply here
 function App() {
@@ -15,7 +15,7 @@ function App() {
     <>
       <Theme>
         {/* This is fixed */}
-        <div className=" bg-slate-900 ">
+        <div className=" ">
           <NavbarPage />
         </div>
 
@@ -25,10 +25,10 @@ function App() {
             {/* Singup page */}
             <Route path="/" element={<LoginUi />}></Route>
 
-            <Route path="/Products" element={<MainProductPage/>}></Route>
+            <Route path="/Products" element={<MainProductPage />}></Route>
             <Route path="/Singup" element={<SingupUi />}></Route>
-            <Route path="/product" element={<MainProductPage />}></Route>
-            <Route path="/Carts" element={<UserCarts/>}></Route>
+            {/* <Route path="/product" element={<MainProductPage />}></Route> */}
+            <Route path="/Carts" element={<CartCatalog/>}></Route>
 
             {/* login page */}
           </Routes>
