@@ -6,18 +6,20 @@ import UserCarts from "./UserCarts";
 import { useEffect, useState } from "react";
 
 const CartCatalog = () => {
-  const Cartss = useSelector((state) => state.Carts.emptyCart);
-  console.log("carts values ", Cartss);
+  // 👉Might be not work let see
+  const Carts = useSelector((state) => state.Carts.emptyCart);
+
+  console.log("carts values ", Carts);
   const [total, setTotal] = useState(0);
 
   // useEffect apply here so we get this !
   useEffect(() => {
     setTotal(
-      Cartss.reduce((previousValue, currentValue) => {
+      Carts.reduce((previousValue, currentValue) => {
         previousValue + currentValue.price;
       }, 0)
     );
-  }, [Cartss]);
+  }, [Carts]);
 
   return (
     <>
@@ -26,11 +28,11 @@ const CartCatalog = () => {
           <div className="">
             {/* cart page  */}
             <div className="">
-              {Cartss && Cartss.length > 0 ? (
+              {Carts && Carts.length > 0 ? (
                 <>
                   <div>
-                    {Cartss &&
-                      Cartss.map((items) => {
+                    {Carts &&
+                      Carts.map((items) => {
                         return (
                           <UserCarts
                             key={items.id}
@@ -42,7 +44,6 @@ const CartCatalog = () => {
                   </div>
                 </>
               ) : (
-                // This is false
                 <>
                   <div className="  text-center  p-4 h-screen mr-20 ">
                     <h1
@@ -73,9 +74,7 @@ const CartCatalog = () => {
                 </>
               )}
             </div>
-            {/* summary start */}
           </div>
-          {/* last vreak points here */}
         </div>
       </div>
     </>

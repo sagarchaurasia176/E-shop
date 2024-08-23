@@ -4,64 +4,68 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 const UiProductPage = ({ items }) => {
-  const [moveBtn, setMove] = useState(true);
   const [readMore, setMore] = useState(false);
-  const toggle = () => {
-    setMore(!readMore);
-  };
+  const toggle = () => setMore(!readMore);
+  const dispatch = useDispatch();
 
-  const dispatched = useDispatch();
+  const Carts = useSelector((state) => state.Carts.emptyCart);
+
+  let isItemInCart = Carts.some((val) => val.id === items.id);
+  console.log("isItem", isItemInCart);
+
+  // 
+  const addItem = ()=>{
+    dispatch(addBtn(items));
+    toast.success("Item added")
+  }
+  const removeItem = () =>{
+      dispatch(removeBtn(items.id));
+      toast.error("Item removed")
+    }
+
   return (
-    <div>
-      <div className=" p-3 flex  items-center">
-        <div className="  max-w-[300px]  borde shadow-md  p-9">
-          {/* titile */}
+    <div className="p-3 flex items-center">
+      <div className="max-w-[300px] border shadow-md p-9">
+        {/* Title */}
+        <div>
+          <span className="font-semibold flex items-center">
+            {items.title.slice(0, 90)}
+          </span>
+        </div>
+        {/* Image */}
+        <div className="w-[11rem]">
+          <img src={items.image} alt={items.title} />
+        </div>
+        {/* Description */}
+        <div className="font-sans w-[220px]">
+          <span>
+            {readMore ? items.description : items.description.slice(0, 100)}
+          </span>
+          <p
+            className="cursor-pointer text-end p-1 font-semibold"
+            onClick={toggle}
+          >
+            {readMore ? "Read less" : "Read more"}
+          </p>
+        </div>
+        <br />
+        {/* Price and Button */}
+        <div
+          className="flex justify-between text-green-950 p-3 
+          text-center rounded-md"
+        >
+          <span className="text-red-600">{items.price}</span>
+
           <div>
-            <span className=" font-semibold flex items-center">
-              {items.title.slice(0, 90)}
-            </span>
-          </div>
-          <div className="  w-[11rem]">
-            <img src={items.image} alt="" />
-          </div>
-          <div className=" font-sans w-[220px] ">
-            <span className="">
-              {readMore ? items.description : items.description.slice(0, 100)}
-            </span>
-            {readMore ? (
+            {isItemInCart ? (
               <>
-                <p
-                  className=" cursor-pointer text-end p-1   text-black font-semibold"
-                  onClick={() => toggle()}
-                >
-                  read more
-                </p>
+                <button onClick={addItem}> Remove Item</button>
               </>
             ) : (
               <>
-                <p
-                  className=" cursor-pointer text-end p-1  font-semibold"
-                  onClick={() => toggle()}
-                >
-                  read less
-                </p>
+                <button onClick={removeItem}>Add Items</button>
               </>
             )}
-          </div>
-          <br />
-          {/* price */}
-          <div
-            className="    flex justify-between text-green-950  p-3 
-           text-center  rounded-md"
-          >
-            <span className="  text-red-600">{items.price}</span>
-            <button className=" cursor-pointer font-semibold  border  px-2 py-2  ">
-              {moveBtn ? (
-                <p onClick={dispatched(addBtn)}>Add Item</p>
-              ) : (
-                <p onClick={dispatched(removeBtn)}>Remove Item</p>
-              )}
-            </button>
           </div>
         </div>
       </div>

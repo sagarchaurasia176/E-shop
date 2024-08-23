@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { MdDeleteOutline } from "react-icons/md";
 // import { MdDeleteOutline } from "react-icons/md";
 const UserCarts = ({ items, amount }) => {
-  // how to calcualte total price
 
-  // Call the () here
   useEffect(() => {
     totalAmountIdentifer();
   }, [total]);
@@ -36,6 +35,11 @@ const UserCarts = ({ items, amount }) => {
               </div>
             </div>
 
+            <div>
+              <button>
+                <MdDeleteOutline />
+              </button>
+            </div>
             {/* buttons */}
           </div>
         </div>

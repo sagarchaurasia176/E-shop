@@ -10,10 +10,12 @@ export const CatalogSlice = createSlice({
   name: "Carts",
   initialState,
   reducers: {
-    addBtn: (state) => {
-        toast.success("Items added")
+    addBtn: (state , action) => {
+            state.push(action , payload);
     },
-    removeBtn: (state) => {},
+    removeBtn: (state) => {
+        
+    },
   },
 });
 // these are the main properties of redux
