@@ -4,64 +4,70 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 const UiProductPage = ({ items }) => {
-  const [moveBtn, setMove] = useState(true);
   const [readMore, setMore] = useState(false);
-  const toggle = () => {
-    setMore(!readMore);
+  const toggle = () => setMore(!readMore);
+  const dispatch = useDispatch();
+
+  const Carts = useSelector((state) => state.Carts);
+
+  // AddItems
+  const addItem = () => {
+    dispatch(addBtn(items));
+    toast.success("Item added");
   };
 
-  const dispatched = useDispatch();
+  const removeItem = () => {
+    dispatch(removeBtn(items.id));
+    toast.error("Item removed");
+  };
+
   return (
-    <div>
-      <div className=" p-3 flex  items-center">
-        <div className="  max-w-[300px]  borde shadow-md  p-9">
-          {/* titile */}
-          <div>
-            <span className=" font-semibold flex items-center">
-              {items.title.slice(0, 90)}
-            </span>
-          </div>
-          <div className="  w-[11rem]">
-            <img src={items.image} alt="" />
-          </div>
-          <div className=" font-sans w-[220px] ">
-            <span className="">
-              {readMore ? items.description : items.description.slice(0, 100)}
-            </span>
-            {readMore ? (
-              <>
-                <p
-                  className=" cursor-pointer text-end p-1   text-black font-semibold"
-                  onClick={() => toggle()}
-                >
-                  read more
-                </p>
-              </>
-            ) : (
-              <>
-                <p
-                  className=" cursor-pointer text-end p-1  font-semibold"
-                  onClick={() => toggle()}
-                >
-                  read less
-                </p>
-              </>
-            )}
-          </div>
-          <br />
-          {/* price */}
-          <div
-            className="    flex justify-between text-green-950  p-3 
-           text-center  rounded-md"
+    <div className="  p-3   bg-slate-800 ">
+      <div className="max-w-[300px]  flex-wrap bg-white sm:items-center rounded-lg ">
+        {/* Title */}
+        <div>
+          <span className="font-semibold flex items-center">
+            {items.title.slice(0, 80)}
+          </span>
+        </div>
+        {/* Image */}
+        <div className="  ml-[5rem]  w-[5rem]  md:w-[5rem]">
+          <img src={items.image} alt={items.title} />
+        </div>
+        {/* Description */}
+        <div className="font-sans">
+          <span>
+            {readMore ? items.description : items.description.slice(0, 90)}
+          </span>
+          <p
+            className="cursor-pointer text-end p-1 font-semibold"
+            onClick={toggle}
           >
-            <span className="  text-red-600">{items.price}</span>
-            <button className=" cursor-pointer font-semibold  border  px-2 py-2  ">
-              {moveBtn ? (
-                <p onClick={dispatched(addBtn)}>Add Item</p>
-              ) : (
-                <p onClick={dispatched(removeBtn)}>Remove Item</p>
-              )}
-            </button>
+            {readMore ? "Read less" : "Read more"}
+          </p>
+        </div>
+        <br />
+        {/* Price and Button */}
+        <div
+          className=" flex  justify-between  text-green-950 p-4 
+          text-center rounded-md"
+        >
+          <span className="text-red-600">${items.price}</span>
+
+          {/* Add the Button logic here */}
+          <div >
+            {Carts.some((p) => p.id === items.id) ? (
+              <button
+                className="bg-slate-600 text-white p-2"
+                onClick={removeItem}
+              >
+                Remove Cart
+              </button>
+            ) : (
+              <button className="bg-slate-600 text-white p-2" onClick={addItem}>
+                Add Cart
+              </button>
+            )}
           </div>
         </div>
       </div>

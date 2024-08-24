@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import toast from "react-hot-toast";
 import axios from "axios";
 import Spinner from "./Spinner";
 import UiProductPage from "./UiProductPage";
