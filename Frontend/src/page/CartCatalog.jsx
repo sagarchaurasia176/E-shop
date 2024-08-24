@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const CartCatalog = () => {
   // 👉Might be not work let see
-  const Carts = useSelector((state) => state.Carts.emptyCart);
+  const Carts  = useSelector((state) => state.Carts.Carts);
 
   console.log("carts values ", Carts);
   const [total, setTotal] = useState(0);

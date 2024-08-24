@@ -1,20 +1,17 @@
 import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
-
 // this is kind of your useState
-const initialState = {
-  emptyCart: [],
-};
+
 export const CatalogSlice = createSlice({
   name: "Carts",
-  initialState,
+  initialState:[],
   reducers: {
-    addBtn: (state , action) => {
-            state.push(action , payload);
+    addBtn: (state, action) => {
+      state.push(action.payload);
     },
-    removeBtn: (state) => {
-        
+    removeBtn: (state, action) => {
+      return state.filter((item) => item.id !== action.payload);
     },
   },
 });

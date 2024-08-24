@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 // import { MdDeleteOutline } from "react-icons/md";
 const UserCarts = ({ items, amount }) => {
-
   useEffect(() => {
     totalAmountIdentifer();
   }, [total]);

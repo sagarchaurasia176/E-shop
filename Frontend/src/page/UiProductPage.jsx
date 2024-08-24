@@ -8,20 +8,18 @@ const UiProductPage = ({ items }) => {
   const toggle = () => setMore(!readMore);
   const dispatch = useDispatch();
 
-  const Carts = useSelector((state) => state.Carts.emptyCart);
+  const Carts = useSelector((state) => state);
 
-  let isItemInCart = Carts.some((val) => val.id === items.id);
-  console.log("isItem", isItemInCart);
-
-  // 
-  const addItem = ()=>{
+  // AddItems
+  const addItem = () => {
     dispatch(addBtn(items));
-    toast.success("Item added")
-  }
-  const removeItem = () =>{
-      dispatch(removeBtn(items.id));
-      toast.error("Item removed")
-    }
+    toast.success("Item added");
+  };
+
+  const removeItem = () => {
+    dispatch(removeBtn(items.id));
+    toast.error("Item removed");
+  };
 
   return (
     <div className="p-3 flex items-center">
@@ -56,15 +54,19 @@ const UiProductPage = ({ items }) => {
         >
           <span className="text-red-600">{items.price}</span>
 
+          {/* Add the Button logic here */}
           <div>
-            {isItemInCart ? (
-              <>
-                <button onClick={addItem}> Remove Item</button>
-              </>
+            {Carts.some((p) => p.id === items.id) ? (
+              <button
+                className="bg-slate-600 text-white p-2"
+                onClick={removeItem}
+              >
+                Remove Cart
+              </button>
             ) : (
-              <>
-                <button onClick={removeItem}>Add Items</button>
-              </>
+              <button className="bg-slate-600 text-white p-2" onClick={addItem}>
+                Add Cart
+              </button>
             )}
           </div>
         </div>
