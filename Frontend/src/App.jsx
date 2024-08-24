@@ -28,7 +28,7 @@ function App() {
             <Route path="/Products" element={<MainProductPage />}></Route>
             <Route path="/Singup" element={<SingupUi />}></Route>
             {/* <Route path="/product" element={<MainProductPage />}></Route> */}
-            <Route path="/Carts" element={<CartCatalog/>}></Route>
+            <Route path="/Carts" element={<CartCatalog />}></Route>
 
             {/* login page */}
           </Routes>
