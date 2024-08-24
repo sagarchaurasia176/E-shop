@@ -1,13 +1,13 @@
 import { removeBtn } from "@/Store/Slice/CatalogSlice";
 import React, { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { MdDeleteOutline } from "react-icons/md";
 const UserCarts = ({ items, total }) => {
   // useEffect(() => {
   //   totalAmountIdentifer();
   // }, [total]);
-
+const Carts = useSelector((val)=>val.Carts);
   const dispatch = useDispatch();
   const removedData = () => {
     dispatch(removeBtn(items.id));
@@ -55,25 +55,7 @@ const UserCarts = ({ items, total }) => {
         </div>
 
         {/* next main page  */}
-        <div className=" bg-red-200">
-          <div className=" p-3 sm:block py-3">
-            <div className=" text-black font-bold ">
-              <h3>Your Cart</h3>
-            </div>
-            <div className="  text-gray-950   font-bold text-3xl">
-              <h1>Summary</h1>
-            </div>
-            <br></br>
-            <div className="   font-bold">
-              <span className=" text-blue-950 font-bold">
-                Total Items : {items.length}
-              </span>
-            </div>
-            <div>
-              <span>Total Amount : ${total}</span>
-            </div>
-          </div>
-        </div>
+     
       </div>
     </div>
   );
