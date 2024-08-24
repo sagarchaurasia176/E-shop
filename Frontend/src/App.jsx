@@ -20,13 +20,13 @@ function App() {
         </div>
 
         {/* THis is auth page or  I can say the main page */}
-        <div>
+        <div className="">
           <Routes>
             {/* Singup page */}
             <Route path="/" element={<LoginUi />}></Route>
+            <Route path="/Singup" element={<SingupUi />}></Route>
 
             <Route path="/Products" element={<MainProductPage />}></Route>
-            <Route path="/Singup" element={<SingupUi />}></Route>
             {/* <Route path="/product" element={<MainProductPage />}></Route> */}
             <Route path="/Carts" element={<CartCatalog />}></Route>
 

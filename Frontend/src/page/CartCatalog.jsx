@@ -16,12 +16,12 @@ const CartCatalog = () => {
   return (
     <>
       <div>
-        <div className=" flex flex-row gap-16 max-w-6xl flex-wrap space-x-36">
+        <div className="">
           {/* cart page  */}
-          <div className=" lg:w-[70%]">
+          <div className=" w-full overflow-hidden">
             {Carts.length > 0 ? (
               <>
-                <div>
+                <div className=" grid lg:grid-cols-2 p-3  sm:grid-cols-2 gap-3">
                   {Carts &&
                     Carts.map((items) => {
                       return (
@@ -29,34 +29,78 @@ const CartCatalog = () => {
                       );
                     })}
                 </div>
-              </>
-            ) : (
-              <>
-                <div className="  text-center  p-4 h-screen mr-20 ">
-                  <h1
-                    className=" lg:text-2xl text-center 
-                     sm:text-2xl  font-extralight "
-                  >
-                    Cart is Empty
-                    <span
-                      className="  
-                      text-3xl"
-                    >
-                      😔
-                    </span>
-                    Add Something
-                  </h1>
-                  <NavLink to="/Products">
-                    <div
-                      className=" flex justify-center items-center 
+                <div>
+                  <div className="  bg-slate-800 text-white">
+                    <div className=" p-3 sm:block py-3">
+                      <div className="  text-teal-400 font-bold ">
+                        <h3>Your Cart</h3>
+                      </div>
+                      <div className="  text-gray-50   font-bold text-3xl">
+                        <h1>Summary</h1>
+                      </div>
+                      <br></br>
+                      <div className="   font-bold">
+                        <span className="  text-orange-600 font-bold">
+                          Total Items : {Carts.length}
+                        </span>
+                      </div>
+                      <div>
+                        <span>Total Amount : ${total}</span>
+                      </div>
+                      <div>
+                        {/* Payment modal on ❌ */}
+                        <NavLink to="/">
+                          <div
+                            className=" flex justify-center items-center 
                          w-44 rounded-lg m-auto cursor-pointer 
                           transition-all duration-100
                            hover:bg-slate-300
                         bg-green-400 outline p-3"
-                    >
-                      <button className=" w-44">Shop Now</button>
+                          >
+                            <button className=" w-44">CheckOut</button>
+                          </div>
+                        </NavLink>
+                      </div>
                     </div>
-                  </NavLink>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  className=" w-screen h-screen  text-white flex justify-center items-center 
+                 bg-slate-900  "
+                >
+                  <div className="">
+                    <h1
+                      className="  
+                       font-extralight "
+                    >
+                      Cart is Empty
+                      <span
+                        className="  
+                      text-4xl"
+                      >
+                        😔
+                      </span>
+                      Add Something
+                    </h1>
+                    <br />
+                  </div>
+
+                  <div>
+                    <NavLink to="/Products">
+                      <div
+                        className=" flex justify-center items-center 
+                         w-44 rounded-lg m-auto cursor-pointer 
+                          transition-all duration-100
+                           hover:bg-slate-300
+                        bg-green-400 outline p-3"
+                      >
+                        <button className=" w-44">Shop Now</button>
+                      </div>
+                    </NavLink>
+                  </div>
                 </div>
               </>
             )}

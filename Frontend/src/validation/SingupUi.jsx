@@ -2,7 +2,9 @@ import React from "react";
 const SingupUi = () => {
   return (
     <div>
-      <section className="max-w-4xl p-7  mt-[3rem]  md:w-[50%] mx-auto  bg-slate-50 rounded-md shadow-md   md:mt-[10rem] dark:bg-gray-800">
+      <div className=" bg-slate-900 h-screen flex justify-center items-center  overflow-x-hidden  overflow-y-hidden">
+
+      <section className="max-w-4xl p-7   md:w-[50%] mx-auto  bg-slate-50 rounded-md shadow-md    dark:bg-gray-800">
         <h2 className="text-lg font-semibold capitalize flex items-center justify-center  dark:text-white">
           <span className=" text-black font-semibold border-b-2 border-red-500 ">
             welcome to Ecomxy
@@ -90,6 +92,8 @@ const SingupUi = () => {
           <div className=" flex  justify-center"></div>
         </form>
       </section>
+      </div>
+
     </div>
   );
 };

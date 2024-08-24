@@ -4,22 +4,24 @@ import Logo from "../../img/logo.png";
 import { FaRegUser } from "react-icons/fa6";
 import { CiShoppingCart } from "react-icons/ci";
 import AddCart from "@/page/AddCartIcons";
+import { useSelector } from "react-redux";
 
 // Navbar headers
 const NavbarPage = () => {
+  const Carts = useSelector((state)=>state.Carts);
   return (
     <>
       <div className="">
         {/* another div here  */}
-        <div className=" flex  bg-slate-800  text-center p-2 justify-around">
+        <div className=" flex  bg-slate-600  text-center justify-around">
           {/* div for main nav */}
-          <div className=" p-2 w-[130px] ">
+          <div className= " p-3 w-[130px] ">
             <Link to="/">
               <img src={Logo} alt="" />
             </Link>
           </div>
           {/* menu bar */}
-          <div className="   hidden md:block   w-[816px] h-2 py-3  space-x-10">
+          <div className="   hidden md:block   w-[816px] h-2 py-5  space-x-10">
             <Link
               to="/Products"
               className="   w-[70px] h-[32px]  space-x-10  font-thin text-white  size-16  justify-center"
@@ -39,13 +41,9 @@ const NavbarPage = () => {
               Products
             </Link>
           </div>
-          {/* last div for cart page */}
-{/* 
-          <Link to="/" className=" w-20  p-2  text-white ">
-            <FaRegUser className=" size-6" />
-          </Link> */}
-          {/* nex div */}
-          <Link to="/Carts" className=" w-20  p-2  font-thin text-white ">
+        
+          <Link to="/Carts" className=" w-20  p-2 font-thin text-white ">
+            <sub  className="  bg-green-500 p-1 rounded-full text-1xl">{Carts.length}</sub>
             <AddCart />
           </Link>
         </div>

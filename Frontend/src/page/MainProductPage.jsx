@@ -36,7 +36,7 @@ const MainProductPage = () => {
             <Spinner />
           ) : productApi && productApi.length > 0 ? (
             <>
-              <div className="">
+              <div className=" grid  sm:grid-cols-1 ml-[2rem] md:grid-cols-3 gap-7 p-3 max-w-6xl m-auto   ">
                 {productApi.map((val) => {
                   return <UiProductPage key={val.id} items={val} />;
                 })}

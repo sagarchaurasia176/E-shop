@@ -22,29 +22,25 @@ const UiProductPage = ({ items }) => {
   };
 
   return (
-    <div className="  p-3   bg-slate-800 ">
-      <div className="max-w-[300px]  flex-wrap bg-white sm:items-center rounded-lg ">
-        {/* Title */}
+    <div className="   ">
+      <div className=" bg-white shadow-md 
+      w-[18rem] h-[23rem] md:hover:scale-110  transition-all duration-500   
+      cursor-pointer p-5 sm:items-center rounded-lg ">
         <div>
-          <span className="font-semibold flex items-center">
-            {items.title.slice(0, 80)}
+          <span className="font-semibold">
+            {items.title.slice(0, 30)}
           </span>
         </div>
         {/* Image */}
-        <div className="  ml-[5rem]  w-[5rem]  md:w-[5rem]">
+        <div className="  ml-[5rem]  w-[6rem]">
           <img src={items.image} alt={items.title} />
         </div>
         {/* Description */}
         <div className="font-sans">
           <span>
-            {readMore ? items.description : items.description.slice(0, 90)}
+            {readMore ? items.description : items.description.slice(0, 60)}
           </span>
-          <p
-            className="cursor-pointer text-end p-1 font-semibold"
-            onClick={toggle}
-          >
-            {readMore ? "Read less" : "Read more"}
-          </p>
+        
         </div>
         <br />
         {/* Price and Button */}
@@ -58,13 +54,13 @@ const UiProductPage = ({ items }) => {
           <div >
             {Carts.some((p) => p.id === items.id) ? (
               <button
-                className="bg-slate-600 text-white p-2"
+                className="bg-slate-600 rounded-md text-white p-2"
                 onClick={removeItem}
               >
                 Remove Cart
               </button>
             ) : (
-              <button className="bg-slate-600 text-white p-2" onClick={addItem}>
+              <button className="bg-slate-600 rounded-md text-white p-2" onClick={addItem}>
                 Add Cart
               </button>
             )}
