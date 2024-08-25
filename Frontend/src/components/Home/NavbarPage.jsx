@@ -8,20 +8,23 @@ import { useSelector } from "react-redux";
 
 // Navbar headers
 const NavbarPage = () => {
-  const Carts = useSelector((state)=>state.Carts);
+  const Carts = useSelector((state) => state.Carts);
   return (
     <>
       <div className="">
         {/* another div here  */}
-        <div className=" flex  bg-slate-600  text-center justify-around">
+        <div
+          className=" flex   bg-slate-800 border-b-2
+          shadow-lg text-center p-3 justify-around"
+        >
           {/* div for main nav */}
-          <div className= " p-3 w-[130px] ">
+          <div className=" w-[130px] ">
             <Link to="/">
               <img src={Logo} alt="" />
             </Link>
           </div>
           {/* menu bar */}
-          <div className="   hidden md:block   w-[816px] h-2 py-5  space-x-10">
+          <div className="   hidden md:block   w-[816px] h-2  py-2 space-x-10">
             <Link
               to="/Products"
               className="   w-[70px] h-[32px]  space-x-10  font-thin text-white  size-16  justify-center"
@@ -41,11 +44,25 @@ const NavbarPage = () => {
               Products
             </Link>
           </div>
-        
-          <Link to="/Carts" className=" w-20  p-2 font-thin text-white ">
+
+          {/* <Link to="/Carts" className=" w-20  p-2 font-thin text-white ">
             <sub  className="  bg-green-500 p-1 rounded-full text-1xl">{Carts.length}</sub>
             <AddCart />
-          </Link>
+          </Link> */}
+          <button
+            className="   bg-slate-900 text-slate-200 border 
+          border-dotted rounded-lg  px-[13px]"
+          >
+            Login
+          </button>
+          <button
+            className="
+           bg-slate-900 text-slate-200 border 
+          border-dotted rounded-lg  px-[5px]
+          "
+          >
+            Singup
+          </button>
         </div>
       </div>
     </>
