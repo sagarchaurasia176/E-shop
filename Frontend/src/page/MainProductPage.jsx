@@ -12,19 +12,21 @@ const MainProductPage = () => {
   const apiUrl = "https://fakestoreapi.com/products";
 
   // useEffect() apply here -
+  const apiCalling = async () => {
+    try {
+      setLoading(true);
+      const apis = await axios.get(apiUrl);
+      console.log("apis fetched !", apis);
+      setProductApi(apis.data);
+      setLoading(false);
+    } catch (er) {
+      console.log("error while fetching api");
+      console.error(er);
+    }
+  };
+  
   useEffect(() => {
-    const apiCalling = async () => {
-      try {
-        setLoading(true);
-        const apis = await axios.get(apiUrl);
-        console.log("apis fetched !", apis);
-        setProductApi(apis.data);
-        setLoading(false);
-      } catch (er) {
-        console.log("error while fetching api");
-        console.error(er);
-      }
-    };
+    
     apiCalling();
   }, []);
 
