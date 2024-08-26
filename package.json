@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "frontend":"cd Frontend  && npm run dev",
-    "backend":" cd Backend && npm run dev",
+    "frontend": "cd Frontend  && npm run dev",
+    "backend": " cd Backend && npm run dev",
     "dev": "concurrently -n \"frontend,backend\" -c \"bgGreen,bgYellow\"  \"npm run frontend\"   \"npm run backend\" "
-
   },
   "keywords": [],
   "author": "",

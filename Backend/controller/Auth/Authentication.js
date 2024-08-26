@@ -88,11 +88,11 @@ exports.SignupController = async (req, res) => {
     }
 
     // Get the recent otp
-    const recentOtpIndetify = await OtpSchema.find({ email })
+    const recentOtpIndetify = await OtpSchema.findOne({ email })
       .sort({ createdAt: -1 })
       .limit(1)
       .exec();
-    console.log("recent otp", recentOtpIndetify);
+     console.log("recent otp", recentOtpIndetify);
     //if otp empty
     if (recentOtpIndetify.length == 0) {
       return res.status(400).json({
@@ -103,6 +103,11 @@ exports.SignupController = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "otp not matched !",
+        error: {
+          message: "The provided OTP did not match the expected value.",
+          stack: new Error().stack,
+        },
+        
       });
     }
 
@@ -128,4 +133,79 @@ exports.SignupController = async (req, res) => {
   }
 };
 
-// login
+// login controller
+
+exports.LoginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(404).json({
+        success: false,
+        message: "empty filled",
+      });
+    }
+
+    const checkInDb = await AuthsSchema.findOne({ email });
+    if (!checkInDb) {
+      return res.status(404).json({
+        success: false,
+        message: "Invalid email",
+      });
+    }
+
+    //password compared
+    const passwordCompared = await bycrypt.compare(
+      password,
+      checkInDb.password
+    );
+    try {
+      if (!passwordCompared) {
+        return res.status(404).json({
+          success: false,
+          message: "Invalid password",
+        });
+      }
+      if (passwordCompared) {
+        //create the jwt first
+        const headers = {
+          id: checkInDb._id,
+          email: checkInDb._id,
+        };
+
+        const jwtCreatedToken = await json.sign(headers , process.env.JWT_Secret , {expiresIn:'1h'});
+        jwtCreatedToken = jwtCreatedToken.toObject();
+        jwtCreatedToken.password = undefined
+
+        const option = {
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+          httpOnly : true,
+        }
+        //create the cookies also
+        res.cookies('login' , jwtCreatedToken , option).status(200).json({
+          message : "cookies stored",
+          jwtCreatedToken,
+
+        })
+
+        return res.status(200).json({
+          success: true,
+          message: "Login successfully done ",
+        });
+
+      }
+    } catch (er) {
+      return res.status(404).json({
+        success: false,
+        message: "Invalid password",
+      });
+
+
+    }
+  } catch (er) {
+    return res.status(404).json({
+      success: false,
+      message: "Not login kindly try again",
+      error : er.message
+    });
+  }
+};

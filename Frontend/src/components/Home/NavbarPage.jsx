@@ -44,11 +44,6 @@ const NavbarPage = () => {
               Products
             </Link>
           </div>
-
-          {/* <Link to="/Carts" className=" w-20  p-2 font-thin text-white ">
-            <sub  className="  bg-green-500 p-1 rounded-full text-1xl">{Carts.length}</sub>
-            <AddCart />
-          </Link> */}
           <button
             className="   bg-slate-900 text-slate-200 border 
           border-dotted rounded-lg  px-[13px]"
