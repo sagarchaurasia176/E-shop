@@ -6,12 +6,12 @@ import UserCarts from "./UserCarts";
 import { useEffect, useState } from "react";
 
 const CartCatalog = () => {
-  const Carts = useSelector((state) => state.Carts);
+  const { cartsArray } = useSelector((state) => state.Carts);
   const [total, setTotal] = useState(0);
   // data fetched
   useEffect(() => {
-    setTotal(Carts.reduce((acc, curr) => acc + curr.price, 0));
-  }, [Carts]);
+    setTotal(cartsArray.reduce((acc, curr) => acc + curr.price, 0));
+  }, [cartsArray]);
 
   return (
     <>
@@ -19,11 +19,11 @@ const CartCatalog = () => {
         <div className="">
           {/* cart page  */}
           <div className=" w-full overflow-hidden">
-            {Carts.length > 0 ? (
+            {cartsArray.length > 0 ? (
               <>
                 <div className=" grid lg:grid-cols-2 p-3  sm:grid-cols-2 gap-3">
-                  {Carts &&
-                    Carts.map((items) => {
+                  {cartsArray &&
+                    cartsArray.map((items) => {
                       return (
                         <UserCarts key={items.id} items={items} total={total} />
                       );
@@ -41,7 +41,7 @@ const CartCatalog = () => {
                       <br></br>
                       <div className="   font-bold">
                         <span className="  text-orange-600 font-bold">
-                          Total Items : {Carts.length}
+                          Total Items : {cartsArray.length}
                         </span>
                       </div>
                       <div>
