@@ -8,8 +8,7 @@ const UiProductPage = ({ items }) => {
   const toggle = () => setMore(!readMore);
   const dispatch = useDispatch();
 
-  const Carts = useSelector((state) => state.Carts);
-
+  const { cartsArray } = useSelector((state) => state.Carts);
   // AddItems
   const addItem = () => {
     dispatch(addBtn(items));
@@ -23,13 +22,13 @@ const UiProductPage = ({ items }) => {
 
   return (
     <div className="   ">
-      <div className=" bg-white shadow-md 
+      <div
+        className=" bg-white shadow-md 
       w-[18rem] h-[23rem] md:hover:scale-110  transition-all duration-500   
-      cursor-pointer p-5 sm:items-center rounded-lg ">
+      cursor-pointer p-5 sm:items-center rounded-lg "
+      >
         <div>
-          <span className="font-semibold">
-            {items.title.slice(0, 30)}
-          </span>
+          <span className="font-semibold">{items.title.slice(0, 30)}</span>
         </div>
         {/* Image */}
         <div className="  ml-[5rem]  w-[6rem]">
@@ -40,7 +39,6 @@ const UiProductPage = ({ items }) => {
           <span>
             {readMore ? items.description : items.description.slice(0, 60)}
           </span>
-        
         </div>
         <br />
         {/* Price and Button */}
@@ -51,8 +49,8 @@ const UiProductPage = ({ items }) => {
           <span className="text-red-600">${items.price}</span>
 
           {/* Add the Button logic here */}
-          <div >
-            {Carts.some((p) => p.id === items.id) ? (
+          <div>
+            {cartsArray.some((p) => p.id === items.id) ? (
               <button
                 className="bg-slate-600 rounded-md text-white p-2"
                 onClick={removeItem}
@@ -60,7 +58,10 @@ const UiProductPage = ({ items }) => {
                 Remove Cart
               </button>
             ) : (
-              <button className="bg-slate-600 rounded-md text-white p-2" onClick={addItem}>
+              <button
+                className="bg-slate-600 rounded-md text-white p-2"
+                onClick={addItem}
+              >
                 Add Cart
               </button>
             )}

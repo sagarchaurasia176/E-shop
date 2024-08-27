@@ -3,20 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Spinner from "./Spinner";
 import UiProductPage from "./UiProductPage";
+import { setLoading } from "@/Store/Slice/CatalogSlice";
+
 
 // main Product page apply here
 const MainProductPage = () => {
   const [productApi, setProductApi] = useState([]);
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const apiUrl = "https://fakestoreapi.com/products";
+  //loading
+  const {loading}  = useSelector((state)=>state.Carts);
 
   // useEffect() apply here -
   const apiCalling = async () => {
     try {
       setLoading(true);
       const apis = await axios.get(apiUrl);
-      console.log("apis fetched !", apis);
       setProductApi(apis.data);
       setLoading(false);
     } catch (er) {
@@ -24,9 +26,8 @@ const MainProductPage = () => {
       console.error(er);
     }
   };
-  
+
   useEffect(() => {
-    
     apiCalling();
   }, []);
 
