@@ -12,10 +12,10 @@ export const CatalogSlice = createSlice({
   initialState : initialState,
   reducers: {
     addBtn: (state, action) => {
-      state.push(action.payload);
+      state.cartsArray.push(action.payload);
     },
     removeBtn: (state, action) => {
-      return state.filter((item) => item.id !== action.payload);
+      return state.cartsArray.filter((item) => item.id !== action.payload);
     },
     setLoading : (state , value)=>{
         state.loading = value.payload
