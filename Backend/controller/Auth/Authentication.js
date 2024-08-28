@@ -12,8 +12,7 @@ export const authentications = {
     LOGIN : BASE_URL + '/api/login'
 }
 
-*/ 
-
+*/
 
 //otp Controller apply here
 exports.OtpController = async (req, res) => {
@@ -27,7 +26,7 @@ exports.OtpController = async (req, res) => {
         message: "Empty Field  !",
       });
     }
-    
+
     // Its check in the authentication = controller and verify it
     const checkInDb = await AuthsSchema.findOne({ email: email });
     if (checkInDb) {
@@ -104,7 +103,7 @@ exports.SignupController = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(1)
       .exec();
-     console.log("recent otp", recentOtpIndetify);
+    console.log("recent otp", recentOtpIndetify);
     //if otp empty
     if (recentOtpIndetify.length == 0) {
       return res.status(400).json({
@@ -119,7 +118,6 @@ exports.SignupController = async (req, res) => {
           message: "The provided OTP did not match the expected value.",
           stack: new Error().stack,
         },
-        
       });
     }
 
@@ -184,40 +182,40 @@ exports.LoginController = async (req, res) => {
           email: checkInDb._id,
         };
 
-        const jwtCreatedToken = await json.sign(headers , process.env.JWT_Secret , {expiresIn:'1h'});
+        const jwtCreatedToken = await json.sign(
+          headers,
+          process.env.JWT_Secret,
+          { expiresIn: "1h" }
+        );
         jwtCreatedToken = jwtCreatedToken.toObject();
-        jwtCreatedToken.password = undefined
+        jwtCreatedToken.password = undefined;
 
         const option = {
           maxAge: 24 * 60 * 60 * 1000, // 24 hours
-          httpOnly : true,
-        }
+          httpOnly: true,
+        };
         //create the cookies also
-        res.cookies('login' , jwtCreatedToken , option).status(200).json({
-          message : "cookies stored",
+        res.cookies("login", jwtCreatedToken, option).status(200).json({
+          message: "cookies stored",
           jwtCreatedToken,
-
-        })
+        });
 
         return res.status(200).json({
           success: true,
           message: "Login successfully done ",
         });
-
       }
     } catch (er) {
       return res.status(404).json({
         success: false,
         message: "Invalid password",
       });
-
-
     }
   } catch (er) {
     return res.status(404).json({
       success: false,
       message: "Not login kindly try again",
-      error : er.message
+      error: er.message,
     });
   }
 };

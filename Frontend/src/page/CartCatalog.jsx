@@ -19,7 +19,7 @@ const CartCatalog = () => {
         <div className="">
           {/* cart page  */}
           <div className=" w-full overflow-hidden">
-            {cartsArray.length > 0 ? (
+            {cartsArray && cartsArray.length > 0 ? (
               <>
                 <div className=" grid lg:grid-cols-2 p-3  sm:grid-cols-2 gap-3">
                   {cartsArray &&
