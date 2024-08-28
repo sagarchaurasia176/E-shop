@@ -4,6 +4,17 @@ const json = require("jsonwebtoken");
 const bycrypt = require("bcrypt");
 const otpGenerate = require("otp-generator");
 
+/*
+const BASE_URL = import.meta.env.VITE_BASE_URL
+export const authentications = {
+    SINGUP : BASE_URL + "/api/singup",
+    OTP : BASE_URL + "/api/otp",
+    LOGIN : BASE_URL + '/api/login'
+}
+
+*/ 
+
+
 //otp Controller apply here
 exports.OtpController = async (req, res) => {
   try {
@@ -16,6 +27,7 @@ exports.OtpController = async (req, res) => {
         message: "Empty Field  !",
       });
     }
+    
     // Its check in the authentication = controller and verify it
     const checkInDb = await AuthsSchema.findOne({ email: email });
     if (checkInDb) {

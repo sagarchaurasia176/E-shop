@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "../../img/logo.png";
 import { FaRegUser } from "react-icons/fa6";
 import { CiShoppingCart } from "react-icons/ci";
@@ -58,6 +58,12 @@ const NavbarPage = () => {
           >
             Singup
           </button>
+          {/* add carts */}
+          <div>
+            <NavLink to="/Carts">
+              <AddCart />
+            </NavLink>
+          </div>
         </div>
       </div>
     </>
