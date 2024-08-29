@@ -9,6 +9,7 @@ const initialState = {
   token: localStorage.getItem("token")
     ? JSON.parse(localStorage.getItem("token"))
     : null,
+  singupData: null,
 };
 
 export const CatalogSlice = createSlice({
@@ -28,12 +29,12 @@ export const CatalogSlice = createSlice({
     setToken: (state, value) => {
       state.token = value.payload;
     },
+    setSingupData(state, value) {
+      state.singupData = value.payload;
+    },
   },
 });
 // these are the main properties of redux
-export const { addBtn, removeBtn, setLoading } = CatalogSlice.actions;
+export const { addBtn, removeBtn, setSingupData, setToken, setLoading } =
+  CatalogSlice.actions;
 export default CatalogSlice.reducer;
-
-// - pending task
-// - loading setup again
-// - and backend connection check

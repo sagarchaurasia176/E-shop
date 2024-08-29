@@ -8,7 +8,7 @@ import { Theme } from "@radix-ui/themes";
 import NavbarPage from "./components/Home/NavbarPage";
 import MainProductPage from "./page/MainProductPage";
 import CartCatalog from "./page/CartCatalog";
-
+import OtpVerify from "./verifyPages/OtpVerify";
 // main function apply here
 function App() {
   return (
@@ -29,6 +29,7 @@ function App() {
             <Route path="/Products" element={<MainProductPage />}></Route>
             {/* <Route path="/product" element={<MainProductPage />}></Route> */}
             <Route path="/Carts" element={<CartCatalog />}></Route>
+            <Route path="/OtpVerify" element={<OtpVerify/>}></Route>
 
             {/* login page */}
           </Routes>
