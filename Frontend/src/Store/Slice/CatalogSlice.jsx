@@ -35,6 +35,5 @@ export const CatalogSlice = createSlice({
   },
 });
 // these are the main properties of redux
-export const { addBtn, removeBtn, setSingupData, setToken, setLoading } =
-  CatalogSlice.actions;
+export const { addBtn, removeBtn, setSingupData, setToken, setLoading } = CatalogSlice.actions;
 export default CatalogSlice.reducer;

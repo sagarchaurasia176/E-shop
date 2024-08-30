@@ -1,18 +1,8 @@
 const AuthsSchema = require("../../model/AuthenticationSchema");
-const OtpSchema = require("../../model/OtpSchema");
+const OTP = require("../../model/OtpSchema");
 const json = require("jsonwebtoken");
 const bycrypt = require("bcrypt");
 const otpGenerate = require("otp-generator");
-
-/*
-const BASE_URL = import.meta.env.VITE_BASE_URL
-export const authentications = {
-    SINGUP : BASE_URL + "/api/singup",
-    OTP : BASE_URL + "/api/otp",
-    LOGIN : BASE_URL + '/api/login'
-}
-
-*/
 
 //otp Controller apply here
 exports.OtpController = async (req, res) => {
@@ -35,9 +25,9 @@ exports.OtpController = async (req, res) => {
         message: "Already registered email !",
       });
     }
-    console.log("email ", checkInDb);
+
     //password gener
-    let otpGenarates = await otpGenerate.generate(6, {
+    let otpGenarates = otpGenerate.generate(6, {
       upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
       specialChars: false,
@@ -45,12 +35,11 @@ exports.OtpController = async (req, res) => {
     console.log("otp generate", otpGenarates);
 
     // main catched apply there
-    const otpStored = await OtpSchema.create({ email, otp: otpGenarates });
+    const otpStored = await OTP.create({ email, otp: otpGenarates });
     return res.status(200).json({
       success: true,
-      message: "OTP sent successfully!",
-      otpGenarates,
-      otpStored,
+      message: "OTP sent successfully !",
+      data: otpStored,
     });
   } catch (er) {
     return res.status(404).json({
@@ -64,8 +53,8 @@ exports.OtpController = async (req, res) => {
 // Signup - Controllers
 exports.SignupController = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword, role, otp } = req.body;
-    if (!name || !email || !password || !confirmPassword || !role || !otp) {
+    const { fullName, email, password, confirmPassword, role, otp } = req.body;
+    if (!fullName || !email || !password || !confirmPassword || !role || !otp) {
       return res.status(200).json({
         success: false,
         message: "emapty field !",
@@ -97,54 +86,52 @@ exports.SignupController = async (req, res) => {
         message: "password not matched",
       });
     }
-
     // Get the recent otp
-    const recentOtpIndetify = await OtpSchema.findOne({ email })
+    const recentOtpIndetify = await OTP.find({ email })
       .sort({ createdAt: -1 })
-      .limit(1)
-      .exec();
-    console.log("recent otp", recentOtpIndetify);
+      .limit(1);
+    console.log("recent otp is this  - ", recentOtpIndetify);
     //if otp empty
-    if (recentOtpIndetify.length == 0) {
+    if (recentOtpIndetify.length === 0) {
       return res.status(400).json({
         success: false,
-        message: "otp not found",
+        message: " otp is not valid",
       });
-    } else if (otp !== recentOtpIndetify) {
+    } else if (otp !== recentOtpIndetify[0].otp) {
       return res.status(400).json({
         success: false,
-        message: "otp not matched !",
-        error: {
-          message: "The provided OTP did not match the expected value.",
-          stack: new Error().stack,
-        },
+        message: "otp not valid!",
       });
+    } else {
+      console.log("otp works perfectly  !");
     }
 
-    //create entry
-    const AuthDataStored = await AuthsSchema.create({
-      name,
+    //create the entry into the db
+    const entryCreatedIntoTheDb = await AuthsSchema.create({
+      fullName,
       email,
-      password: hashPasword,
-      confirmPassword: hashPasword,
+      password,
+      confirmPassword,
       role,
-      otp: recentOtpIndetify,
+      otp,
     });
     return res.status(200).json({
       success: true,
-      message: "Signup successfully! welcome to e-shop mart",
-      AuthDataStored,
+      message: "Singup succesfull done !",
+      data: entryCreatedIntoTheDb,
     });
+
+    // catch part apply there so we get !
   } catch (er) {
     return res.status(400).json({
       success: false,
       message: "Signup not successfully done!",
+      error: er.message,
     });
   }
 };
 
 // login controller
-
 exports.LoginController = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -159,22 +146,12 @@ exports.LoginController = async (req, res) => {
     if (!checkInDb) {
       return res.status(404).json({
         success: false,
-        message: "Invalid email",
+        message: "Invalid email kindly registerd",
       });
     }
-
-    //password compared
-    const passwordCompared = await bycrypt.compare(
-      password,
-      checkInDb.password
-    );
+    // For password comapred here
+    const passwordCompared = bycrypt.compare(password, checkInDb.password);
     try {
-      if (!passwordCompared) {
-        return res.status(404).json({
-          success: false,
-          message: "Invalid password",
-        });
-      }
       if (passwordCompared) {
         //create the jwt first
         const headers = {
@@ -182,39 +159,37 @@ exports.LoginController = async (req, res) => {
           email: checkInDb._id,
         };
 
-        const jwtCreatedToken = await json.sign(
-          headers,
-          process.env.JWT_Secret,
-          { expiresIn: "1h" }
-        );
-        jwtCreatedToken = jwtCreatedToken.toObject();
-        jwtCreatedToken.password = undefined;
-
-        const option = {
-          maxAge: 24 * 60 * 60 * 1000, // 24 hours
-          httpOnly: true,
-        };
-        //create the cookies also
-        res.cookies("login", jwtCreatedToken, option).status(200).json({
-          message: "cookies stored",
-          jwtCreatedToken,
+        let jwtCreatedToken = await json.sign(headers, process.env.JWT_Secret, {
+          expiresIn: "1h",
         });
+        console.log("jwt token", jwtCreatedToken);
+        checkInDb.jwtCreatedToken = jwtCreatedToken;
+
+        checkInDb.password = undefined;
+        checkInDb.confirmPassword = undefined;
 
         return res.status(200).json({
           success: true,
           message: "Login successfully done ",
+          data: checkInDb,
+          jwtCreatedToken,
         });
       }
+
+      // Catch apply here so we get
     } catch (er) {
       return res.status(404).json({
         success: false,
-        message: "Invalid password",
+        message: "something went wrong kinly try again",
+        error: er.message,
       });
     }
+
+    // Login Failed apply here
   } catch (er) {
     return res.status(404).json({
       success: false,
-      message: "Not login kindly try again",
+      message: "Login Failed",
       error: er.message,
     });
   }

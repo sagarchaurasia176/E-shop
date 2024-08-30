@@ -9,7 +9,7 @@ import { authentications } from "../ApiLink";
 //API - END POINTS of the API link pages
 const { SINGUP, OTP, LOGIN } = authentications;
 // SingupCallOperateions
-export function singUp(
+export function SingUp(
   fullName,
   email,
   password,
@@ -36,6 +36,7 @@ export function singUp(
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
+      console.log(response.data.success);
       toast.success("Singup succesful");
       //naviage to the login page
       navigate("/");
@@ -50,7 +51,7 @@ export function singUp(
   };
 }
 
-//otp
+// --- otp apply there so we get ---
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("loading....");
@@ -60,7 +61,7 @@ export function sendOtp(email, navigate) {
         email,
         checkInDb: true,
       });
-
+      console.log("response checked it from opt sides", response);
       if (!response.data.message) {
         throw new Error(response.data.message);
       }
@@ -68,7 +69,8 @@ export function sendOtp(email, navigate) {
       navigate("/OtpVerify");
     } catch (er) {
       toast.error("Otp not sent ! kindly try again");
-      console.log(er);
+      throw new Error(er.message);
+      
     }
     dispatch(setLoading(false));
     toast.dismiss(toastId);
