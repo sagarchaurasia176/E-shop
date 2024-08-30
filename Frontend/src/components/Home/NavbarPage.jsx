@@ -11,11 +11,11 @@ const NavbarPage = () => {
   const Carts = useSelector((state) => state.Carts);
   return (
     <>
-      <div className="">
+      <div className="  w-[100%]">
         {/* another div here  */}
         <div
-          className=" flex   bg-slate-800 border-b-2
-          shadow-lg text-center p-3 justify-around"
+          className=" flex   bg-slate-800  
+          shadow-lg text-center   p-2 justify-around"
         >
           {/* div for main nav */}
           <div className=" w-[130px] ">

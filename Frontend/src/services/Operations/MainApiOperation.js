@@ -76,3 +76,7 @@ export function sendOtp(email, navigate) {
     toast.dismiss(toastId);
   };
 }
+
+
+// verify password 
+//
