@@ -9,18 +9,19 @@ import NavbarPage from "./components/Home/NavbarPage";
 import MainProductPage from "./page/MainProductPage";
 import CartCatalog from "./page/CartCatalog";
 import OtpVerify from "./verifyPages/OtpVerify";
+import ResetPassword from "./verifyPages/ResetPassword";
 // main function apply here
 function App() {
   return (
     <>
       <Theme>
         {/* This is fixed */}
-        <div className=" ">
+        <div className="">
           <NavbarPage />
         </div>
 
         {/* THis is auth page or  I can say the main page */}
-        <div className="">
+        <div className=" w-full overflow-hidden">
           <Routes>
             {/* Singup page */}
             <Route path="/" element={<LoginUi />}></Route>
@@ -30,6 +31,7 @@ function App() {
             {/* <Route path="/product" element={<MainProductPage />}></Route> */}
             <Route path="/Carts" element={<CartCatalog />}></Route>
             <Route path="/OtpVerify" element={<OtpVerify/>}></Route>
+            <Route path="/ResetPassword" element={<ResetPassword/>}></Route>
 
             {/* login page */}
           </Routes>
