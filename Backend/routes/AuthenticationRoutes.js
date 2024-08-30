@@ -7,8 +7,8 @@ const {
 const router = express.Router();
 
 // AUTH ROUTES
-router.post("/api/singup", SignupController);
-router.post("/api/otp", OtpController);
-router.post ('/api/login' , LoginController);
+router.post("/singup", SignupController);
+router.post("/otp", OtpController);
+router.post ('/login' , LoginController);
 
 module.exports = router;

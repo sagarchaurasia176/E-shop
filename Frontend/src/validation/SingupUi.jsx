@@ -49,9 +49,8 @@ const SingupUi = () => {
         ...singupForm,
       };
 
-      //reset the form
       dispatch(setSingupData(singupData));
-      //otp move
+      //once otp correct  then singup data will stored into the db
       dispatch(sendOtp(singupForm.email, navigate));
       // now move to the dashboard of the product page
       //but before otp verify
