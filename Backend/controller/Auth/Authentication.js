@@ -3,6 +3,9 @@ const OTP = require("../../model/OtpSchema");
 const json = require("jsonwebtoken");
 const bycrypt = require("bcrypt");
 const otpGenerate = require("otp-generator");
+const maileTranportToGmail = require("../../utils/MailConfig");
+
+// BACKEND CONTROLLER
 
 //otp Controller apply here
 exports.OtpController = async (req, res) => {
@@ -11,28 +14,27 @@ exports.OtpController = async (req, res) => {
     const { email } = req.body;
     //validtion
     if (!email) {
-      return res.json({
+      return res.status(400).json({
         success: false,
-        message: "Empty Field  !",
+        message: "Empty Field not allowed !",
       });
     }
 
     // Its check in the authentication = controller and verify it
     const checkInDb = await AuthsSchema.findOne({ email: email });
     if (checkInDb) {
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: "Already registered email !",
       });
     }
 
     //password gener
-    let otpGenarates = otpGenerate.generate(6, {
+    let otpGenarates = await otpGenerate.generate(6, {
       upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    console.log("otp generate", otpGenarates);
 
     // main catched apply there
     const otpStored = await OTP.create({ email, otp: otpGenarates });
@@ -53,17 +55,17 @@ exports.OtpController = async (req, res) => {
 // Signup - Controllers
 exports.SignupController = async (req, res) => {
   try {
-    const { fullName, email, password, confirmPassword, role, otp } = req.body;
-    if (!fullName || !email || !password || !confirmPassword || !role || !otp) {
-      return res.status(200).json({
+    const { fullName, email, password, confirmPassword, otp } = req.body;
+    if (!fullName || !email || !password || !confirmPassword || !otp) {
+      return res.status(404).json({
         success: false,
-        message: "emapty field !",
+        message: "emapty field not allowed!",
       });
     }
     //email valid
     const checkInDb = await AuthsSchema.findOne({ email });
     if (checkInDb) {
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: "Already registered email !",
       });
@@ -71,17 +73,9 @@ exports.SignupController = async (req, res) => {
     //otp valid
     //password hash
     let hashPasword = await bycrypt.hash(password, 10);
-    if (!hashPasword) {
-      return res.json({
-        success: false,
-        message:
-          "Soory your password not hash ! kindly change your password from google acc",
-      });
-    }
-
     // no compare the two password
     if (password !== confirmPassword) {
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: "password not matched",
       });
@@ -90,7 +84,7 @@ exports.SignupController = async (req, res) => {
     const recentOtpIndetify = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
-    console.log("recent otp is this  - ", recentOtpIndetify);
+
     //if otp empty
     if (recentOtpIndetify.length === 0) {
       return res.status(400).json({
@@ -102,18 +96,14 @@ exports.SignupController = async (req, res) => {
         success: false,
         message: "otp not valid!",
       });
-    } else {
-      console.log("otp works perfectly  !");
     }
 
-    //create the entry into the db
     const entryCreatedIntoTheDb = await AuthsSchema.create({
       fullName,
       email,
-      password,
-      confirmPassword,
-      role,
-      otp,
+      password: hashPasword,
+      confirmPassword: hashPasword,
+      otp: recentOtpIndetify,
     });
     return res.status(200).json({
       success: true,
@@ -123,6 +113,7 @@ exports.SignupController = async (req, res) => {
 
     // catch part apply there so we get !
   } catch (er) {
+    console.error(er.message);
     return res.status(400).json({
       success: false,
       message: "Signup not successfully done!",
@@ -138,7 +129,7 @@ exports.LoginController = async (req, res) => {
     if (!email || !password) {
       return res.status(404).json({
         success: false,
-        message: "empty filled",
+        message: "empty filled not allowed",
       });
     }
 
@@ -150,7 +141,10 @@ exports.LoginController = async (req, res) => {
       });
     }
     // For password comapred here
-    const passwordCompared = bycrypt.compare(password, checkInDb.password);
+    const passwordCompared = await bycrypt.compare(
+      password,
+      checkInDb.password
+    );
     try {
       if (passwordCompared) {
         //create the jwt first
@@ -195,3 +189,42 @@ exports.LoginController = async (req, res) => {
   }
 };
 
+// change password
+exports.changePassword = async (req, res) => {
+  try {
+    const identifyUsersFromHisId = await AuthsSchema.findById(
+      req.entryCreatedIntoTheDb.id
+    );
+    const { password, confirmPassword } = req.body;
+    const passwordComapared = await bycrypt.compare(
+      password,
+      identifyUsersFromHisId.password
+    );
+    if (!passwordComapared) {
+      return res.status(404).json({
+        success: false,
+        message: "Password not matched",
+        error: er.message,
+      });
+    }
+
+    //hash the passd
+    let hashPassword = await bycrypt.hash(password, 10);
+    //upade the passd into the schema
+    const updateUsersDetails = await AuthsSchema.findByIdAndUpdate(
+      req.entryCreatedIntoTheDb.id,
+      { password: hashPassword },
+      { new: true }
+    );
+  // Send mail to the client
+    try{
+      const emailSendedToTheClient = await maileTranportToGmail(updateUsersDetails.id , "Password for your account has been updated" , )
+    }catch(er){
+
+    }
+
+  } catch (er) {}
+};
+
+
+// pending 

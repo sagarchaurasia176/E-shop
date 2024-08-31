@@ -30,8 +30,8 @@ function App() {
             <Route path="/Products" element={<MainProductPage />}></Route>
             {/* <Route path="/product" element={<MainProductPage />}></Route> */}
             <Route path="/Carts" element={<CartCatalog />}></Route>
-            <Route path="/OtpVerify" element={<OtpVerify/>}></Route>
-            <Route path="/ResetPassword" element={<ResetPassword/>}></Route>
+            <Route path="/OtpVerify" element={<OtpVerify />}></Route>
+            <Route path="/ResetPassword" element={<ResetPassword />}></Route>
 
             {/* login page */}
           </Routes>

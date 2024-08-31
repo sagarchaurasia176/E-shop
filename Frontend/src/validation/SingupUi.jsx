@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { sendOtp } from "@/services/Operations/MainApiOperation";
+import { sendOtp, SingUp } from "@/services/Operations/MainApiOperation";
 
 // import { FaLongArrowAltRight } from "react-icons/fa";
 
@@ -40,19 +40,24 @@ const SingupUi = () => {
       e.preventDefault();
       setLoading(true);
 
+      //filed
+      if (!fullName || !email || !password || !confirmPassword) {
+        toast.error("Invalid Fileds");
+      }
+
       //passweord
       if (password !== confirmPassword) {
         toast.error("Password not matched !");
+        setLoading(false);
       }
-
       const singupData = {
         ...singupForm,
       };
 
-      dispatch(setSingupData(singupData));
-      //once otp correct  then singup data will stored into the db
-      dispatch(sendOtp(singupForm.email, navigate));
-      // now move to the dashboard of the product page
+      // Dispatch signup actions
+      dispatch(setSingupData(singupData)); // Ensure this dispatch is awaited if it involves async actions
+      dispatch(sendOtp(email, navigate)); // Ensure OTP dispatch is only done after successful signup
+
       //but before otp verify
     } catch (er) {
       console.log("error while submitting !", er);
@@ -111,7 +116,7 @@ const SingupUi = () => {
                 />
               </div>
 
-              <div className=" ">
+              <div className=" b">
                 <label
                   className="text-gray-700  dark:text-gray-200"
                   for="password"
@@ -180,7 +185,7 @@ const SingupUi = () => {
                 type="submit"
                 className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
               >
-                Singup
+                Create Account
               </button>
             </div>
 

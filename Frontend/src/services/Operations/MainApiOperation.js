@@ -9,6 +9,8 @@ import { authentications } from "../ApiLink";
 //API - END POINTS of the API link pages
 const { SINGUP, OTP, LOGIN } = authentications;
 // SingupCallOperateions
+
+
 export function SingUp(
   fullName,
   email,
@@ -16,8 +18,7 @@ export function SingUp(
   confirmPassword,
   otp,
   navigate
-) {
-  return async (dispatch) => {
+) { return async (dispatch) => {
     //send the req to the server
     const toasId = toast.loading("loading....");
     dispatch(setLoading(true));
@@ -53,6 +54,7 @@ export function SingUp(
 
 // --- otp apply there so we get ---
 export function sendOtp(email, navigate) {
+  
   return async (dispatch) => {
     const toastId = toast.loading("loading....");
     dispatch(setLoading(true));
