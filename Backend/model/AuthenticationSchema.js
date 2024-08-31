@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Auths = new mongoose.Schema({
-fullName: {
+  fullName: {
     type: String,
     required: true,
   },
@@ -14,9 +14,11 @@ fullName: {
   confirmPassword: {
     type: String,
   },
-  role: {
+  token: {
     type: String,
-    enum: ["User", "Admin"],
+  },
+  passwordExpire: {
+    type: Date,
   },
 });
-module.exports = mongoose.model('AuthsSchema' , Auths);
+module.exports = mongoose.model("AuthsSchema", Auths);
