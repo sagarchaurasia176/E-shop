@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../img/logo.png";
-import { NavLink } from "react-router-dom";
-
+import { Link, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoading } from "@/Store/Slice/CatalogSlice";
 const LoginUi = () => {
+  //form valid
+  const [logins, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = logins;
+  // handler - Onchange
+  const LoginHandler = (e) => {
+    e.preventDefault();
+    //get all the data form the login page and modify it
+    setLogin({
+      ...logins,
+      [e.target.name]: e.target.value,
+    });
+    // name && val will wrap
+  };
+  const dispatch = useDispatch();
+
+  // Login Submit
+  const LoginSubmit = () => {
+    dispatch(setLoading(true));
+  };
+  //loading
+  //links
+  //dispatch
+
   return (
     <div className="   flex items-center min-h-svh bg-slate-800 justify-center">
       <div className="sm:w-[25rem] border  lg:w-[30%] sm:px-[3rem] bg-slate-800 py-12 m-auto mx-auto rounded-lg dark:bg-gray-800">
@@ -11,16 +38,19 @@ const LoginUi = () => {
             <img className="w-auto h-7 sm:h-8" src={logo} alt="Logo" />
           </div>
 
-          <form className="mt-6">
+          <form onSubmit={LoginSubmit} className="mt-6">
             <div>
               <label
-                htmlFor="username"
+                htmlFor="email"
                 className="block text-sm  text-white dark:text-gray-200"
               >
                 Enter Your Email
               </label>
               <input
                 type="text"
+                name="email"
+                value={email}
+                onChange={LoginHandler}
                 className="block w-full px-4 py-2 mt-2  text-black bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -33,16 +63,17 @@ const LoginUi = () => {
                 >
                   Enter your Password
                 </label>
-                <a
-                  href="#"
-                  className="text-xs  text-white dark:text-gray-400 hover:underline"
-                >
-                  Forget Password?
-                </a>
+                <Link  to='/ResetPassword' className="text-xs  text-white dark:text-gray-400 hover:underline">
+                Forget Password?
+                </Link>
+                
               </div>
 
               <input
                 type="password"
+                name="passwod"
+                value={password}
+                onChange={LoginHandler}
                 className="block w-full px-4 py-2 mt-2   text-white bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -57,6 +88,7 @@ const LoginUi = () => {
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/5"></span>
 
+            {/* Providers */}
             <a
               href="#"
               className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline"
