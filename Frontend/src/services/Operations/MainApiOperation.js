@@ -7,9 +7,8 @@ import { apiConnector } from "../ApiConnector";
 import { authentications } from "../ApiLink";
 
 //API - END POINTS of the API link pages
-const { SINGUP, OTP, LOGIN } = authentications;
+const { SINGUP, OTP, LOGIN, RESETPASSWORDTOKEN } = authentications;
 // SingupCallOperateions
-
 
 export function SingUp(
   fullName,
@@ -18,7 +17,8 @@ export function SingUp(
   confirmPassword,
   otp,
   navigate
-) { return async (dispatch) => {
+) {
+  return async (dispatch) => {
     //send the req to the server
     const toasId = toast.loading("loading....");
     dispatch(setLoading(true));
@@ -54,10 +54,15 @@ export function SingUp(
 
 // --- otp apply there so we get ---
 export function sendOtp(email, navigate) {
-  
   return async (dispatch) => {
     const toastId = toast.loading("loading....");
     dispatch(setLoading(true));
+    if (!email) {
+      toast.error("Empty field not allowed");
+      dispatch(setLoading(false));
+      toast.dismiss(toastId);
+      return;
+    }
     try {
       const response = await apiConnector("POST", OTP, {
         email,
@@ -72,13 +77,29 @@ export function sendOtp(email, navigate) {
     } catch (er) {
       toast.error("Otp not sent ! kindly try again");
       throw new Error(er.message);
-      
+    } finally {
+      dispatch(setLoading(false));
+      toast.dismiss(toastId);
     }
-    dispatch(setLoading(false));
-    toast.dismiss(toastId);
   };
 }
-
-
-// verify password 
-//
+// ----- PASSWORD RESET TOKEN APPLY THERE ---
+export const PasswordReseToken = (email, setSent) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      //api called to the backen
+      const passwordResetCallToBackend = await apiConnector(
+        "POST",
+        RESETPASSWORDTOKEN,
+        { email }
+      );
+      //password token apply here so we get
+      if (!passwordResetCallToBackend.data.message) {
+        throw new Error(passwordResetCallToBackend.data.message);
+      }
+    } catch (er) {
+      toast.error("Error while Reset token");
+    }
+  };
+};

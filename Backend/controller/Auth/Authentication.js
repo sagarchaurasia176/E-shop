@@ -4,7 +4,7 @@ const json = require("jsonwebtoken");
 const bycrypt = require("bcrypt");
 const otpGenerate = require("otp-generator");
 const maileTranportToGmail = require("../../utils/MailConfig");
-
+const UpdatePasswordTemplate = require("../../mail/UpdatePasswordTemplate");
 // BACKEND CONTROLLER
 
 //otp Controller apply here
@@ -22,12 +22,13 @@ exports.OtpController = async (req, res) => {
 
     // Its check in the authentication = controller and verify it
     const checkInDb = await AuthsSchema.findOne({ email: email });
-    if (checkInDb) {
+    if (checkInDb === true) {
       return res.status(404).json({
         success: false,
         message: "Already registered email !",
       });
     }
+   
 
     //password gener
     let otpGenarates = await otpGenerate.generate(6, {
@@ -189,7 +190,7 @@ exports.LoginController = async (req, res) => {
   }
 };
 
-// change password
+// change password from the users sides here so we get !
 exports.changePassword = async (req, res) => {
   try {
     const identifyUsersFromHisId = await AuthsSchema.findById(
@@ -216,15 +217,38 @@ exports.changePassword = async (req, res) => {
       { password: hashPassword },
       { new: true }
     );
-  // Send mail to the client
-    try{
-      const emailSendedToTheClient = await maileTranportToGmail(updateUsersDetails.id , "Password for your account has been updated" , )
-    }catch(er){
-
+    // Send mail to the client
+    try {
+      const emailSendedToTheClient = await maileTranportToGmail(
+        updateUsersDetails.id,
+        "Password for your account has been updated",
+        //body of the mail
+        UpdatePasswordTemplate(
+          updateUsersDetails.email,
+          `Password updated successfully for ${updateUsersDetails.fullName}`
+        )
+      );
+      console.log(emailSendedToTheClient);
+    } catch (er) {
+      //Now update the password here
+      return res.status(404).json({
+        success: false,
+        message: "Password  not updated",
+      });
     }
-
-  } catch (er) {}
+    //Now update the password here
+    return res.status(200).json({
+      success: true,
+      message: "Password updated",
+    });
+  }   catch (er) {
+    //Now update the password here
+    return res.status(404).json({
+      success: false,
+      message: "Error occrued while updating the password",
+      error: er.message,
+    });
+  }
 };
 
 
-// pending 

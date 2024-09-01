@@ -26,14 +26,11 @@ function App() {
             {/* Singup page */}
             <Route path="/" element={<LoginUi />}></Route>
             <Route path="/Singup" element={<SingupUi />}></Route>
-
             <Route path="/Products" element={<MainProductPage />}></Route>
             {/* <Route path="/product" element={<MainProductPage />}></Route> */}
             <Route path="/Carts" element={<CartCatalog />}></Route>
             <Route path="/OtpVerify" element={<OtpVerify />}></Route>
             <Route path="/ResetPassword" element={<ResetPassword />}></Route>
-
-            {/* login page */}
           </Routes>
         </div>
       </Theme>
@@ -42,3 +39,8 @@ function App() {
 }
 
 export default App;
+
+
+
+// pending task 
+// change password fields

@@ -23,7 +23,7 @@ const SingupUi = () => {
   //destruct the values
   const { fullName, email, password, confirmPassword } = singupForm;
   const [showPassword, setPassword] = useState(false);
-  const [ConfirmPassword, setConfirmPassword] = useState(false);
+  const [Confirm, setConfirm] = useState(false);
   // pending here 🤷‍♂️
   // onchagne methods where the users can type his data
   const singupInputField = (e) => {
@@ -35,20 +35,15 @@ const SingupUi = () => {
     });
   };
   //onsubmit form submission
-  const FormSubmitted = (e) => {
+  const FormSubmitted = async (e) => {
     try {
       e.preventDefault();
       setLoading(true);
 
-      //filed
-      if (!fullName || !email || !password || !confirmPassword) {
-        toast.error("Invalid Fileds");
-      }
-
-      //passweord
       if (password !== confirmPassword) {
         toast.error("Password not matched !");
         setLoading(false);
+        return;
       }
       const singupData = {
         ...singupForm,
@@ -58,6 +53,7 @@ const SingupUi = () => {
       dispatch(setSingupData(singupData)); // Ensure this dispatch is awaited if it involves async actions
       dispatch(sendOtp(email, navigate)); // Ensure OTP dispatch is only done after successful signup
 
+      setLoading(false);
       //but before otp verify
     } catch (er) {
       console.log("error while submitting !", er);
@@ -89,6 +85,7 @@ const SingupUi = () => {
                   id="name"
                   name="fullName"
                   value={fullName}
+                  required
                   onChange={singupInputField}
                   type="text"
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800
@@ -109,6 +106,7 @@ const SingupUi = () => {
                   type="email"
                   name="email"
                   value={email}
+                  required
                   onChange={singupInputField}
                   className="block w-full px-4 py-2 mt-2 text-gray-700
                  bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
@@ -116,7 +114,7 @@ const SingupUi = () => {
                 />
               </div>
 
-              <div className=" b">
+              <div className="">
                 <label
                   className="text-gray-700  dark:text-gray-200"
                   for="password"
@@ -128,47 +126,51 @@ const SingupUi = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   value={password}
+                  required
                   onChange={singupInputField}
-                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border
+                  className=" w-full  px-4 py-2 mt-2 text-gray-700 bg-white border
                  border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400
                   focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
 
                 <span
                   onClick={() => setPassword((pre) => !pre)}
-                  className="  flex justify-end bg-none text-black  lg:mt-[-2rem] lg:mr-[1rem] sm:mr-[1rem]  mt-2rem z-10 "
+                  className="  flex justify-end   text-black  lg:mt-[-2rem] lg:mr-[1rem] sm:mr-[1rem]  mt-2rem z-10 "
                 >
                   {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                 </span>
               </div>
 
-              <div>
+              {/* Confirm password */}
+              <div className="">
                 <label
-                  className="text-gray-700 dark:text-gray-200"
-                  for="passwordConfirmation"
+                  className="text-gray-700  dark:text-gray-200"
+                  for="password"
                 >
-                  Password Confirmation
+                  Confirm Password
                 </label>
                 <input
-                  id="passwordConfirmation"
-                  type={ConfirmPassword ? "text" : "password"}
+                  id="password"
+                  type={Confirm ? "text" : "password"}
                   name="confirmPassword"
                   value={confirmPassword}
+                  required
                   onChange={singupInputField}
-                  className="block w-full px-4 py-2 mt-2 text-gray-700
-                 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
-                  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  className=" w-full  px-4 py-2 mt-2 text-gray-700 bg-white border
+                 border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400
+                  focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
 
                 <span
-                  onClick={() => setConfirmPassword((pre) => !pre)}
-                  className=" text-black   cursor-pointer flex justify-end  "
+                  onClick={() => setConfirm((pre) => !pre)}
+                  className="  flex justify-end   text-black  lg:mt-[-2rem] lg:mr-[1rem] sm:mr-[1rem]  mt-2rem z-10 "
                 >
-                  {ConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                  {Confirm ? <FaRegEye /> : <FaRegEyeSlash />}
                 </span>
               </div>
+
+              <br></br>
             </div>
-            <br></br>
 
             <div className="flex items-center  justify-between">
               <p className=" capitalize font-thin">
