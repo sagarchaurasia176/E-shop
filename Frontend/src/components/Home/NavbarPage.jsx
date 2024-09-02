@@ -14,7 +14,7 @@ const NavbarPage = () => {
       <div className="  w-[100%]">
         {/* another div here  */}
         <div
-          className=" flex   bg-slate-800  
+          className=" flex   bg-slate-600  
           shadow-lg text-center   p-2 justify-around"
         >
           {/* div for main nav */}

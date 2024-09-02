@@ -1,4 +1,5 @@
 const AuthsSchema = require("../../model/AuthenticationSchema");
+
 const OTP = require("../../model/OtpSchema");
 const json = require("jsonwebtoken");
 const bycrypt = require("bcrypt");
@@ -22,13 +23,12 @@ exports.OtpController = async (req, res) => {
 
     // Its check in the authentication = controller and verify it
     const checkInDb = await AuthsSchema.findOne({ email: email });
-    if (checkInDb === true) {
+    if (checkInDb) {
       return res.status(404).json({
         success: false,
         message: "Already registered email !",
       });
     }
-   
 
     //password gener
     let otpGenarates = await otpGenerate.generate(6, {
@@ -191,6 +191,7 @@ exports.LoginController = async (req, res) => {
 };
 
 // change password from the users sides here so we get !
+// UPDATED PASSWORD CODE APPLY HERE
 exports.changePassword = async (req, res) => {
   try {
     const identifyUsersFromHisId = await AuthsSchema.findById(
@@ -241,7 +242,7 @@ exports.changePassword = async (req, res) => {
       success: true,
       message: "Password updated",
     });
-  }   catch (er) {
+  } catch (er) {
     //Now update the password here
     return res.status(404).json({
       success: false,
@@ -250,5 +251,3 @@ exports.changePassword = async (req, res) => {
     });
   }
 };
-
-

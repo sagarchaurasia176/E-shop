@@ -7,7 +7,8 @@ import { apiConnector } from "../ApiConnector";
 import { authentications } from "../ApiLink";
 
 //API - END POINTS of the API link pages
-const { SINGUP, OTP, LOGIN, RESETPASSWORDTOKEN } = authentications;
+const { SINGUP, OTP, LOGIN, RESETPASSWORDTOKEN, UPDATEPASSWORD } =
+  authentications;
 // SingupCallOperateions
 
 export function SingUp(
@@ -86,6 +87,7 @@ export function sendOtp(email, navigate) {
 // ----- PASSWORD RESET TOKEN APPLY THERE ---
 export const PasswordReseToken = (email, setSent) => {
   return async (dispatch) => {
+    const toastId = toast.loading("loading....");
     dispatch(setLoading(true));
     try {
       //api called to the backen
@@ -98,8 +100,50 @@ export const PasswordReseToken = (email, setSent) => {
       if (!passwordResetCallToBackend.data.message) {
         throw new Error(passwordResetCallToBackend.data.message);
       }
+      setSent(true);
+      dispatch(setLoading(false));
     } catch (er) {
-      toast.error("Error while Reset token");
+      console.error(er);
+      toast.error("Email is expired kindly login again");
     }
+    toast.dismiss(toastId);
+  };
+};
+
+// Update password
+export const ChangedPasswordBackendCall = (
+  password,
+  confirmPassword,
+  token,
+  navigate
+) => {
+  const toastID = toast.loading("loading....");
+  //write the main logic of change password
+  return async (dispatch) => {
+    try {
+      dispatch(setLoading(true));
+      //call to the backend
+      const requestSendToBackend = await apiConnector("POST", UPDATEPASSWORD, {
+        password,
+        confirmPassword,
+        token,
+
+      });
+
+      if (password !== confirmPassword) {
+        toast.error("password not matched , try again");
+      }
+      if (!requestSendToBackend.data.message) {
+        throw new Error(requestSendToBackend.data.message);
+      }
+      toast.success("password reset succesfull");
+      navigate('/')
+      dispatch(setLoading(false));
+    } catch (er) {
+      console.error(er);
+      toast.error("Password not matched kindly reset again !");
+      navigate('/ResetPassword')
+    }
+    toast.dismiss(toastID);
   };
 };
