@@ -25,7 +25,7 @@ exports.resetPasswordToken = async (req, res) => {
     );
     console.log("update the password", updateTheTokenIntoAuthSchema);
     //create  the random url of forntend
-    const url = `http://localhost:5173/reset-password/${token}`;
+    const url = `http://localhost:5173/update-password/${token}`;
     //send mail with the url
     await maileTranportToGmail(
       email,
@@ -94,6 +94,7 @@ exports.resetPassword = async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "Password not reset ",
+      error : er.message
     });
   }
 };

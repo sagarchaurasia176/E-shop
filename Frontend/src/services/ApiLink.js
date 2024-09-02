@@ -4,6 +4,6 @@ export const authentications = {
   SINGUP: BASE_URL + "/singup",
   OTP: BASE_URL + "/otp",
   LOGIN: BASE_URL + "/login",
-  UPDATEPASSWORD : BASE_URL + "/update/password",
+  UPDATEPASSWORD : BASE_URL + "/update-password",
   RESETPASSWORDTOKEN  : BASE_URL + "/PasswordReseToken"
 };
