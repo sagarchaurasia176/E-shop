@@ -1,7 +1,6 @@
 import { setLoading, setToken } from "@/Store/Slice/CatalogSlice";
-import { Check } from "lucide-react";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { apiConnector } from "../ApiConnector";
 import { authentications } from "../ApiLink";
@@ -24,7 +23,7 @@ export function SingUp(
     dispatch(setLoading(true));
     //Passed the method req to the clients
     try {
-        const response = await apiConnector("POST", SINGUP, {
+      const response = await apiConnector("POST", SINGUP, {
         //WHAT I WANT FROM THE CLIENTS
         fullName,
         email,
@@ -42,14 +41,12 @@ export function SingUp(
       navigate("/");
     } catch (er) {
       toast.error("Failed to Singup");
-    
+      throw new Error(er.message);
     }
     dispatch(setLoading(false));
     toast.dismiss(toasId);
   };
 }
-
-
 
 // --- otp apply there so we get ---
 export function SendOtp(email, navigate) {
@@ -60,14 +57,13 @@ export function SendOtp(email, navigate) {
       toast.error("Empty field not allowed");
       dispatch(setLoading(false));
       toast.dismiss(toastId);
-      return;
     }
     try {
       const response = await apiConnector("POST", OTP, {
         email,
         checkInDb: true,
       });
-      console.log("sagar", response.data.message);
+      console.log("otp api dataa", response.data.message);
       if (!response.data.message) {
         throw new Error(response.data.message);
       }
@@ -160,20 +156,29 @@ export const LoginOperations = (email, password, navigate) => {
       const response = await apiConnector("POST", LOGIN, { email, password });
 
       // Log response data
-      console.log("API Response:", response.data);
 
       if (!response.data.token) {
+        console.log(response.data.message);
         throw new Error("Missing token in response");
       }
 
-      dispatch(setToken(response.data.token));
+      try {
+        dispatch(setToken(response.data.token));
+        console.log("API Response: token value", response.data.token);
+      } catch (er) {
+        console.log("error at the setToken part", er);
+      }
+
       navigate("/Products");
       localStorage.setItem("token", JSON.stringify(response.data.token));
+
       toast.success("Login successful");
       dispatch(setLoading(false));
+
+      //Catched appled there so we get
     } catch (er) {
       console.error("Error during login:", er);
-      toast.error("Login failed");
+      toast.error("Login failed ");
       navigate("/");
     } finally {
       dispatch(setLoading(false)); // Ensure loading is stopped

@@ -3,6 +3,7 @@ import logo from "../img/logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/Store/Slice/CatalogSlice";
+import { LoginOperations } from "@/services/Operations/MainApiOperation";
 // LOGIN - UI 
 const LoginUi = () => {
   //form valid
@@ -24,7 +25,8 @@ const LoginUi = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // Login Submit
-  const LoginSubmit = () => {
+  const LoginSubmit = (e) => {
+    e.preventDefault();
     // dispatch(setLoading(true));
     dispatch(LoginOperations(email, password, navigate));
   };

@@ -3,15 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 // this is kind of your useState
 
-const initialState = {
-  cartsArray: [],
-  loading: false,
-  token: localStorage.getItem("token")
-    ? JSON.parse(localStorage.getItem("token"))
-    : null,
-  // This for singup purpose
-  singupData: null,
-};
+  const initialState = {
+    cartsArray: [],
+    loading: false,
+    token: localStorage.getItem("jwtCreatedToken") ? JSON.parse(localStorage.getItem("jwtCreatedToken")) : null,
+    // This for singup purpose
+    singupData: null,
+  };
 
 export const CatalogSlice = createSlice({
   name: "Carts",
