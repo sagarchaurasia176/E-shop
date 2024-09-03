@@ -1,4 +1,4 @@
-import { setLoading } from "@/Store/Slice/CatalogSlice";
+import { setLoading, setToken } from "@/Store/Slice/CatalogSlice";
 import { Check } from "lucide-react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,6 @@ import { authentications } from "../ApiLink";
 const { SINGUP, OTP, LOGIN, RESETPASSWORDTOKEN, UPDATEPASSWORD } =
   authentications;
 // SingupCallOperateions
-
 export function SingUp(
   fullName,
   email,
@@ -25,7 +24,7 @@ export function SingUp(
     dispatch(setLoading(true));
     //Passed the method req to the clients
     try {
-      const response = await apiConnector("POST", SINGUP, {
+        const response = await apiConnector("POST", SINGUP, {
         //WHAT I WANT FROM THE CLIENTS
         fullName,
         email,
@@ -33,7 +32,6 @@ export function SingUp(
         confirmPassword,
         otp,
       });
-
       //check the respone
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -44,17 +42,17 @@ export function SingUp(
       navigate("/");
     } catch (er) {
       toast.error("Failed to Singup");
-      console.log(er);
-      navigate("/Singup");
+    
     }
-
     dispatch(setLoading(false));
     toast.dismiss(toasId);
   };
 }
 
+
+
 // --- otp apply there so we get ---
-export function sendOtp(email, navigate) {
+export function SendOtp(email, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("loading....");
     dispatch(setLoading(true));
@@ -69,21 +67,24 @@ export function sendOtp(email, navigate) {
         email,
         checkInDb: true,
       });
-      console.log("response checked it from opt sides", response);
+      console.log("sagar", response.data.message);
       if (!response.data.message) {
         throw new Error(response.data.message);
       }
       toast.success("Otp sent succesfull");
-      navigate("/OtpVerify");
-    } catch (er) {
-      toast.error("Otp not sent ! kindly try again");
-      throw new Error(er.message);
-    } finally {
       dispatch(setLoading(false));
-      toast.dismiss(toastId);
+      navigate("/OtpVerify");
+
+      // Catch apply there so we get
+    } catch (er) {
+      console.log("otp main api error", er);
+      toast.error("error occured from otp server!");
+      throw new Error(er.message);
     }
+    toast.dismiss(toastId);
   };
 }
+
 // ----- PASSWORD RESET TOKEN APPLY THERE ---
 export const PasswordReseToken = (email, setSent) => {
   return async (dispatch) => {
@@ -127,7 +128,6 @@ export const ChangedPasswordBackendCall = (
         password,
         confirmPassword,
         token,
-
       });
 
       if (password !== confirmPassword) {
@@ -137,13 +137,47 @@ export const ChangedPasswordBackendCall = (
         throw new Error(requestSendToBackend.data.message);
       }
       toast.success("password reset succesfull");
-      navigate('/')
+      navigate("/");
       dispatch(setLoading(false));
     } catch (er) {
       console.error(er);
       toast.error("Password not matched kindly reset again !");
-      navigate('/ResetPassword')
+      navigate("/OtpVerify");
     }
     toast.dismiss(toastID);
+  };
+};
+
+// login operations apply here so we get it
+export const LoginOperations = (email, password, navigate) => {
+  return async (dispatch) => {
+    const toastId = toast.loading("loading....");
+    try {
+      dispatch(setLoading(true));
+      // Log before sending the request
+      console.log("Sending login request with:", { email, password });
+
+      const response = await apiConnector("POST", LOGIN, { email, password });
+
+      // Log response data
+      console.log("API Response:", response.data);
+
+      if (!response.data.token) {
+        throw new Error("Missing token in response");
+      }
+
+      dispatch(setToken(response.data.token));
+      navigate("/Products");
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      toast.success("Login successful");
+      dispatch(setLoading(false));
+    } catch (er) {
+      console.error("Error during login:", er);
+      toast.error("Login failed");
+      navigate("/");
+    } finally {
+      dispatch(setLoading(false)); // Ensure loading is stopped
+      toast.dismiss(toastId);
+    }
   };
 };

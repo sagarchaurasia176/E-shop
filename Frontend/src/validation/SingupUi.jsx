@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { sendOtp, SingUp } from "@/services/Operations/MainApiOperation";
+import { SendOtp } from "@/services/Operations/MainApiOperation";
 
 // import { FaLongArrowAltRight } from "react-icons/fa";
 
@@ -51,7 +51,7 @@ const SingupUi = () => {
 
       // Dispatch signup actions
       dispatch(setSingupData(singupData)); // Ensure this dispatch is awaited if it involves async actions
-      dispatch(sendOtp(email, navigate)); // Ensure OTP dispatch is only done after successful signup
+      dispatch(SendOtp(email, navigate)); // Ensure OTP dispatch is only done after successful signup
 
       setLoading(false);
       //but before otp verify
@@ -82,10 +82,10 @@ const SingupUi = () => {
                   Full Name
                 </label>
                 <input
-                  id="name"
                   name="fullName"
                   value={fullName}
                   required
+                  autoComplete="fullName"
                   onChange={singupInputField}
                   type="text"
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800
@@ -102,11 +102,11 @@ const SingupUi = () => {
                   Email Address
                 </label>
                 <input
-                  id="emailAddress"
                   type="email"
                   name="email"
                   value={email}
                   required
+                  autoComplete="email"
                   onChange={singupInputField}
                   className="block w-full px-4 py-2 mt-2 text-gray-700
                  bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
@@ -122,11 +122,11 @@ const SingupUi = () => {
                   Password
                 </label>
                 <input
-                  id="password"
                   type={showPassword ? "text" : "password"}
                   name="password"
                   value={password}
                   required
+                  autoComplete="password"
                   onChange={singupInputField}
                   className=" w-full  px-4 py-2 mt-2 text-gray-700 bg-white border
                  border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400
@@ -150,11 +150,11 @@ const SingupUi = () => {
                   Confirm Password
                 </label>
                 <input
-                  id="password"
                   type={Confirm ? "text" : "password"}
                   name="confirmPassword"
                   value={confirmPassword}
                   required
+                  autoComplete="confirmPassword"
                   onChange={singupInputField}
                   className=" w-full  px-4 py-2 mt-2 text-gray-700 bg-white border
                  border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400

@@ -1,5 +1,4 @@
 import "./App.css";
-
 import { Route, Routes } from "react-router-dom";
 import "@radix-ui/themes/styles.css";
 import SingupUi from "./validation/SingupUi";
@@ -11,6 +10,7 @@ import CartCatalog from "./page/CartCatalog";
 import OtpVerify from "./verifyPages/OtpVerify";
 import ResetPassword from "./verifyPages/ResetPassword";
 import ChangePassword from "./verifyPages/ChangePassword";
+
 // main function apply here
 function App() {
   return (
@@ -32,10 +32,12 @@ function App() {
             <Route path="/Carts" element={<CartCatalog />}></Route>
             <Route path="/OtpVerify" element={<OtpVerify />}></Route>
             <Route path="/ResetPassword" element={<ResetPassword />}></Route>
-           
-           {/* Here password the id on the basis of its worked */}
-            <Route path="/update-password/:id" element={<ChangePassword/>}></Route>
-            
+
+            {/* Here password the id on the basis of its worked */}
+            <Route
+              path="/update-password/:id"
+              element={<ChangePassword />}
+            ></Route>
           </Routes>
         </div>
       </Theme>
@@ -45,7 +47,5 @@ function App() {
 
 export default App;
 
-
-
-// pending task 
+// pending task
 // change password fields
