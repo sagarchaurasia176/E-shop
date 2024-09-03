@@ -9,7 +9,7 @@ const initialState = {
   token: localStorage.getItem("token")
     ? JSON.parse(localStorage.getItem("token"))
     : null,
-    // This for singup purpose 
+  // This for singup purpose
   singupData: null,
 };
 
@@ -36,5 +36,6 @@ export const CatalogSlice = createSlice({
   },
 });
 // these are the main properties of redux
-export const { addBtn, removeBtn, setSingupData, setToken, setLoading } = CatalogSlice.actions;
+export const { addBtn, removeBtn, setSingupData, setToken, setLoading } =
+  CatalogSlice.actions;
 export default CatalogSlice.reducer;

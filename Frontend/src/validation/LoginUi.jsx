@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import logo from "../img/logo.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/Store/Slice/CatalogSlice";
+// LOGIN - UI 
 const LoginUi = () => {
   //form valid
   const [logins, setLogin] = useState({
@@ -21,14 +22,14 @@ const LoginUi = () => {
     // name && val will wrap
   };
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   // Login Submit
   const LoginSubmit = () => {
-    dispatch(setLoading(true));
+    // dispatch(setLoading(true));
+    dispatch(LoginOperations(email, password, navigate));
   };
   //loading
-  //links
-  //dispatch
+  const [passwords, setPassword] = useState(false);
 
   return (
     <div className="   flex items-center min-h-svh bg-slate-800 justify-center">
@@ -49,6 +50,7 @@ const LoginUi = () => {
               <input
                 type="text"
                 name="email"
+                required
                 value={email}
                 onChange={LoginHandler}
                 className="block w-full px-4 py-2 mt-2  text-black bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -63,23 +65,29 @@ const LoginUi = () => {
                 >
                   Enter your Password
                 </label>
-                <Link  to='/ResetPassword' className="text-xs  text-white dark:text-gray-400 hover:underline">
-                Forget Password?
+                <Link
+                  to="/ResetPassword"
+                  className="text-xs  text-white dark:text-gray-400 hover:underline"
+                >
+                  Forget Password?
                 </Link>
-                
               </div>
 
               <input
-                type="password"
-                name="passwod"
+                type={passwords ? "text" : "password"}
+                name="password"
                 value={password}
+                required
                 onChange={LoginHandler}
-                className="block w-full px-4 py-2 mt-2   text-white bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full px-4 py-2 mt-2   text-black bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
 
             <div className="mt-6">
-              <button className="w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
+              <button
+                type="submit"
+                className="w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+              >
                 Sign In
               </button>
             </div>
@@ -116,7 +124,7 @@ const LoginUi = () => {
               {" "}
               Don't have an account?{" "}
               <NavLink to="/Singup">
-                <p className="cursor-pointer font-medium text-black dark:text-gray-200 hover:underline">
+                <p className="cursor-pointer text-white font-bold dark:text-gray-200 hover:underline">
                   Create One
                 </p>
               </NavLink>

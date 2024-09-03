@@ -47,7 +47,7 @@ exports.OtpController = async (req, res) => {
   } catch (er) {
     return res.status(404).json({
       success: false,
-      message: "Error in Auth controller! in otp part",
+      message: "Error in Auth controller! in otp part backend",
       error: er.message,
     });
   }
