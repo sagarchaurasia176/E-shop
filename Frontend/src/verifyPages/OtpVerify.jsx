@@ -68,8 +68,6 @@ const OtpVerify = () => {
               <NavLink to="/singup">
                 <FaLongArrowAltLeft className=" text-2xl" />
               </NavLink>
-
-              {/* reseend it  */}
             </div>
           </div>
         </form>

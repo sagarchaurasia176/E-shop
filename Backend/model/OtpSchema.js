@@ -29,6 +29,7 @@ async function mailVerification(email, otp) {
     );
     return mailChecked;
   } catch (er) {
+    console.log("mail not goes " , er);
     throw new error();
   }
 }
@@ -39,7 +40,8 @@ otpSchemas.pre("save", async function (next) {
     await mailVerification(this.email, this.otp);
     next();
   } catch (er) {
-    throw new error();
+    console.error("opt schemas at the function parts here so we get!", er);
+    
   }
 });
 

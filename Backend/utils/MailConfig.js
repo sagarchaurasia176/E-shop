@@ -6,6 +6,7 @@ const maileTranportToGmail = async (email, title, body) => {
   try {
     let transport = await nodemailer.createTransport({
       host: process.env.HOST_NAME,
+      debug: true,
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
@@ -19,7 +20,7 @@ const maileTranportToGmail = async (email, title, body) => {
     });
     console.log("info ", info);
   } catch (er) {
-    console.log("error at mailConfig", er);
+    console.log("error at mailConfig in mailConfig page kindy checked !", er);
   }
 
   //   end funtion

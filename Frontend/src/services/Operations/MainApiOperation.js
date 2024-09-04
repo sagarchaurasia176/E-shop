@@ -24,7 +24,7 @@ export function SingUp(
     dispatch(setLoading(true));
     //Passed the method req to the clients
     try {
-        const response = await apiConnector("POST", SINGUP, {
+      const response = await apiConnector("POST", SINGUP, {
         //WHAT I WANT FROM THE CLIENTS
         fullName,
         email,
@@ -42,14 +42,11 @@ export function SingUp(
       navigate("/");
     } catch (er) {
       toast.error("Failed to Singup");
-    
     }
     dispatch(setLoading(false));
     toast.dismiss(toasId);
   };
 }
-
-
 
 // --- otp apply there so we get ---
 export function SendOtp(email, navigate) {
