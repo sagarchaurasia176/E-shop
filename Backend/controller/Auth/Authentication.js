@@ -31,7 +31,7 @@ exports.OtpController = async (req, res) => {
     }
 
     //password gener
-    let otpGenarates = await otpGenerate.generate(6, {
+    let otpGenarates =  otpGenerate.generate(6, {
       upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
       specialChars: false,
