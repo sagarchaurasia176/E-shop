@@ -1,28 +1,28 @@
-const nodemailer = require("nodemailer");
-require("dotenv").config();
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
-// mail transport to gmail -
+// Mail transport to Gmail
 const maileTranportToGmail = async (email, title, body) => {
-  try {
-    let transport = await nodemailer.createTransport({
-      host: process.env.HOST_NAME,
-      debug: true,
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
-      },
-    });
-    let info = await transport.sendMail({
-      from: "welcome to e-shop", // sender address
-      to: `${email}`, // list of receivers
-      subject: `${title}`, // Subject line
-      html: `${body}`, // html body
-    });
-    console.log("info ", info);
-  } catch (er) {
-    console.log("error at mailConfig in mailConfig page kindy checked !", er);
-  }
+    try {
+        const transport = await nodemailer.createTransport({
+            host: process.env.MAIL_HOST,
+            auth: {
+                user: process.env.MAIL_USER,
+                pass: process.env.MAIL_PASS,
+            },
+        });
 
-  //   end funtion
+        const info = await transport.sendMail({
+            from: `"${process.env.MAIL_USER}" <${process.env.MAIL_USER}>`, // From address with name
+            to: email,
+            subject: title,
+            html: body,
+        });
+
+        console.log('Mail sent:', info.messageId);
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
 };
+
 module.exports = maileTranportToGmail;

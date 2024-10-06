@@ -31,10 +31,11 @@ const OtpVerify = () => {
   return (
     <div className="   bg-slate-900 flex flex-col  h-screen  w-full m-auto justify-center  items-center ">
       <div className=" container  lg:w-[50%]  sm:w-[23rem]">
+        {/* otp descp map applied */}
         {otpDescp.map((data) => (
           <>
-            <div key={data.id}>
-              <h1 className=" font-bold text-2xl text-white">{data.title}</h1>
+            <div>
+              <h1 key={data.id} className=" font-bold text-2xl text-white">{data.title}</h1>
             </div>
             <div className="  text-white">
               <span>{data.descp}</span>
