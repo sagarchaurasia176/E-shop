@@ -25,12 +25,12 @@ const NavbarPage = () => {
           </div>
           {/* menu bar */}
           <div className="   hidden md:block   w-[816px] h-2  py-2 space-x-10">
-            <Link
+            {/* <Link
               to="/Products"
               className="   w-[70px] h-[32px]  space-x-10  font-thin text-white  size-16  justify-center"
             >
               Home
-            </Link>
+            </Link> */}
             <Link
               to="/About"
               className="   w-[70px] h-[32px]  space-x-10 font-thin text-white  size-16  justify-center"
