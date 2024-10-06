@@ -164,7 +164,7 @@ exports.LoginController = async (req, res) => {
         checkInDb.confirmPassword = undefined;
 
         return res.status(200).json({
-          success: true,
+          success: false,
           message: "Login successfully done ",
           data: checkInDb,
           jwtCreatedToken,
