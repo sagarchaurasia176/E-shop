@@ -40,7 +40,7 @@ const NavbarPage = () => {
             <Link className="   w-[70px] h-[32px] p-1  space-x-10 font-thin text-white  size-16  justify-center">
               Contact
             </Link>
-            <Link className="   w-[70px] h-[32px] p-1  space-x-10 font-thin text-white  size-16  justify-center">
+            <Link to='/Products' className="   w-[70px] h-[32px] p-1  space-x-10 font-thin text-white  size-16  justify-center">
               Products
             </Link>
           </div>
