@@ -10,7 +10,6 @@ const OrderController = async (req, res) => {
       currency: "USD",
       receipt: crypto.randomUUID(),
     };
-    // RazorpayInstance => help to create the order of the users
 
     RazorpayInstance.orders.create(option, (er, order) => {
       if (er) {
@@ -24,6 +23,10 @@ const OrderController = async (req, res) => {
         });
       }
     });
+
+
+
+
   } catch (er) {
     res.status(404).json({
       message: "order creation failed",
@@ -32,7 +35,6 @@ const OrderController = async (req, res) => {
   }
 };
 
-
-module.exports={
-    OrderController
-}
+module.exports = {
+  OrderController,
+};
